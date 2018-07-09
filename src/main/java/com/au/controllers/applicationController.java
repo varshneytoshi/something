@@ -1,5 +1,6 @@
 package com.au.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.au.entities.User;
+import com.au.repositories.Userrepository;
 
 
 @Controller
@@ -19,6 +21,8 @@ public class applicationController {
 //        return "Greetings from Spring Boot!";
 //    }
 	
+	@Autowired
+	Userrepository userrepo;
 	@GetMapping("/greeting")
     public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
         model.addAttribute("name", name);
@@ -33,6 +37,7 @@ public class applicationController {
 
 	    @PostMapping("/addNewUser")
 	    public String greetingSubmit(@ModelAttribute User user) {
+	    	userrepo.save(user);
 	        return "result";
 	    }
 	
