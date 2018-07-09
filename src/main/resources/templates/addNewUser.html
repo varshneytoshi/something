@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<form action="#" th:action="@{/addNewUser}" th:object="${user}" method="post">
+   <table>
+      <tr>
+         <td>Name</td>
+         <td><input type="text" name="Name" th:field="*{userName}" /></td>
+      </tr>
+      <tr>
+         <td>Password</td>
+         <td><input type="password" name="password" th:field="*{userPass}"/></td>
+      </tr>
+      <tr>
+         <td>Email id</td>
+         
+         <td><input type="text" name="email" th:field="*{usermailId}"/></td>
+      </tr>
+      <tr>
+         <td>Contact No.</td>
+         <td><input type="number" name="contact"  th:field="*{userContact}"/></td>
+      </tr>
+      <tr>
+         <td>Estimated Budget</td>
+         <td><input type="number" name="budget" th:field="*{estBudget}"/></td>
+      </tr>
+      <tr>
+         <td>City</td>
+         <td><input type="text" name="city" /></td>
+      </tr>
+      <!--  <tr>
+         <td>Starting Date of ceremonies</td>
+         <td><input type="date" name="date" th:field="*{weddingDate} "/></td>
+      </tr>-->
+      <tr>
+         <td>Number of days</td>
+         <td><input type="number" name="days" th:field="*{noOfWeddingDays}"/></td>
+      </tr>
+      <tr>
+         <td>Number of guests</td>
+         <td><input type="text" name="no_of_guests" /></td>
+      </tr>
+      <tr>
+         <td><input type="submit" name="Submit" /></td>
+      </tr>
+      <tr><td><input type="reset" value="Reset" /></td></tr>
+   </table>
+</form>
