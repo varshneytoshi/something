@@ -18,11 +18,11 @@ package com.au.controllers;
 	@Controller
 	public class CateringController  {
 			@Autowired
-			CateringRepository catrepo;
+			CateringRepository cateringRepo;
 			@CrossOrigin
 			@GetMapping("/getAllCatering")
 			public ResponseEntity<List<Catering>> getCateringList() {
-				List<Catering> catering=catrepo.findAll();
+				List<Catering> catering=cateringRepo.findAll();
 				return new ResponseEntity<List<Catering>>(catering, HttpStatus.OK);
 			}
 		
@@ -34,7 +34,7 @@ package com.au.controllers;
 				if(limit<=0||numberOfPersons<=0)
 				return getCateringList();
 				System.out.println(numberOfPersons+" "+numberOfPersons);
-				List<Catering> catering=catrepo.findbyfilter(new Float(limit/numberOfPersons));
+				List<Catering> catering=cateringRepo.findbyfilter(new Float(limit/numberOfPersons));
 				return new ResponseEntity<List<Catering>>(catering, HttpStatus.OK);
 			}
 		
