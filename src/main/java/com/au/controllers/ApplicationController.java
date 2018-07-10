@@ -90,5 +90,18 @@ public class ApplicationController {
 			return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 		}
 	
-	
+		@CrossOrigin
+	    @PostMapping("/cart")
+	    public ResponseEntity<User> getUserByCart(@RequestBody HashMap<String,String> map) {
+	    	User user = userRepo.findUserByCartId(Integer.parseInt(map.get("cartid")));
+	    	//User user=userrepo.findById(1).get();
+	    	return new ResponseEntity<User>(user, HttpStatus.OK);
+	    }
+	    
+	    @CrossOrigin
+	    @PostMapping("/getById")
+	    public ResponseEntity<User> getUserById(@RequestBody HashMap<String,String> map) {
+	    	User user = userRepo.findUserById(Integer.parseInt(map.get("userid")));
+	    	return new ResponseEntity<User>(user, HttpStatus.OK);
+	    }
 }
