@@ -13,30 +13,39 @@ package com.au.controllers;
 	import org.springframework.web.bind.annotation.RequestBody;
 
 	import com.au.entities.Catering;
-	import com.au.repositories.CateringRepository;
+import com.au.entities.User;
+import com.au.entities.Venue;
+import com.au.repositories.CateringRepository;
+import com.au.repositories.UserRepository;
 
 	@Controller
 	public class CateringController  {
 			@Autowired
-			CateringRepository catrepo;
+			CateringRepository cateringRepo;
+			@Autowired
+			UserRepository userRepo;
 			@CrossOrigin
 			@GetMapping("/getAllCatering")
 			public ResponseEntity<List<Catering>> getCateringList() {
-				List<Catering> catering=catrepo.findAll();
+				List<Catering> catering=cateringRepo.findAll();
 				return new ResponseEntity<List<Catering>>(catering, HttpStatus.OK);
 			}
 		
 			@CrossOrigin
-			@PostMapping("/getCateringFiltered")
-			public ResponseEntity<List<Catering>> getCateringListFiltered(@RequestBody HashMap<String,String> filterMap) {
-				float limit=Float.parseFloat(filterMap.get("budget"));
-				float numberOfPersons=Float.parseFloat(filterMap.get("noOfPerson"));
-				if(limit<=0||numberOfPersons<=0)
-				return getCateringList();
-				System.out.println(numberOfPersons+" "+numberOfPersons);
-				List<Catering> catering=catrepo.findbyfilter(new Float(limit/numberOfPersons));
-				return new ResponseEntity<List<Catering>>(catering, HttpStatus.OK);
+			@PostMapping("/getCateringItems")
+			public ResponseEntity<List<Catering>> getCateringListFiltered(@RequestBody String userId ) {
+				User user = userRepo.findById(Integer.parseInt(userId)).get();
+				double priceBound=calculateFoodPriceUpperBound(user.getEstBudget(),user.getNoOfWeddingDays(),user.getNoOfGuest());	
+				List<Catering> foodItems=cateringRepo.findbyPriceAndCulture(priceBound, user.getCulture());
+				return new ResponseEntity<List<Catering>>(foodItems, HttpStatus.OK);
 			}
+			
+			private double calculateFoodPriceUpperBound(double estBudget,double noOfDays,int guests) {
+				return estBudget*0.4/(noOfDays*guests);
+				
+			}
+				
+			
 		
 			
 			@CrossOrigin

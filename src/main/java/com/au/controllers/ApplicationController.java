@@ -108,17 +108,6 @@ public class ApplicationController {
 	    	return new ResponseEntity<User>(user, HttpStatus.OK);
 	    }
 	    
-//	    @CrossOrigin
-//	    @PostMapping("/updateuser")
-//	    public void updateUser(@RequestBody HashMap<String,String> map) throws Exception {
-//	    	if(!userRepo.existsById(Integer.parseInt(map.get("userid"))))
-//	    	{
-//	    		throw new Exception("user doesn't exist");
-//	    	}
-//	    	User user = userRepo.findById(Integer.parseInt(map.get("userid"))).get();
-//	    	
-//	    	userRepo.save(user);
-//	    }
 	    
 	    @CrossOrigin
 	    @PostMapping("/deleteuser")
