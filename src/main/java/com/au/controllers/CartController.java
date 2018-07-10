@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.au.entities.Cart;
+import com.au.entities.EventItemMapper;
 import com.au.entities.User;
 import com.au.repositories.CartRepository;
+import com.au.repositories.EventItemRepository;
 import com.au.repositories.UserRepository;
 
 @Controller
@@ -21,7 +23,8 @@ public class CartController {
 	UserRepository userRepo;
 	@Autowired
 	CartRepository cartRepo;
-	
+	@Autowired
+	EventItemRepository eiRepo;
 	private User getUser(int userID) {
 		return userRepo.findById(userID).get();
 	}
@@ -49,7 +52,21 @@ public class CartController {
 		return new ResponseEntity<Integer>(0,HttpStatus.OK);
 	}
 	
-	
+	@CrossOrigin
+	@PostMapping("/setItem")
+	public ResponseEntity<Integer> setitem(@RequestBody HashMap<String, String> itemsObject) {
+		int userId=Integer.parseInt(itemsObject.get("userId"));
+		User user=getUser(userId);
+		int cartId=user.getCartId();
+		int itemId=Integer.parseInt(itemsObject.get("itemId"));
+		int eventId=Integer.parseInt(itemsObject.get("eventId"));
+		EventItemMapper eiMapper=new EventItemMapper();
+		eiMapper.setCartId(cartId);
+		eiMapper.setEventId(eventId);
+		eiMapper.setItemId(itemId);
+		eiRepo.save(eiMapper);	
+		return new ResponseEntity<Integer>(0,HttpStatus.OK);
+	}
 	
 	
 }

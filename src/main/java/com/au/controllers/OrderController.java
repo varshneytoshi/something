@@ -37,9 +37,9 @@ public class OrderController {
     	return new ResponseEntity<Integer>(1, HttpStatus.OK);
     }
 	
-	@CrossOrigin
-	@PostMapping("/addToOrderItem")
-	public void addOrderItem(@RequestBody HashMap<String,String> map){
-		orderRepo.insertOrderItem(Integer.parseInt(map.get("orderid")), Integer.parseInt(map.get("itemid")));
-	}
+//	@CrossOrigin
+//	@PostMapping("/addToOrderItem")
+//	public void addOrderItem(@RequestBody HashMap<String,String> map){
+//		orderRepo.insertOrderItem(Integer.parseInt(map.get("orderid")), Integer.parseInt(map.get("itemid")));
+//	}
 }
