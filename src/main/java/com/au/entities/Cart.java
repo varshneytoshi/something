@@ -35,10 +35,6 @@ private static final long serialVersionUID = -2054386655979281129L;
 	@Column(name="MenuId")
 	private int menuId;
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@PrimaryKeyJoinColumn
-	private User user;
-	
 //	//add lib for it @JsonIgnore
 //	@ManyToMany(fetch = FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
 //	@JoinTable(name="cart_item_mapper" , joinColumns = { @JoinColumn(name="CartId")},inverseJoinColumns= {@JoinColumn(name="ItemId")})

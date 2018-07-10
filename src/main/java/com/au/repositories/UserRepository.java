@@ -8,13 +8,13 @@ import org.springframework.stereotype.Repository;
 import com.au.entities.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
-	@Query("select u from User u where u.UsermailId = :mail")
+	@Query("select u from User u where u.UsermailId = :mail and u.delFlag = 0")
 	User findByMailId(@Param("mail") String foo);
 	
-	@Query("select u from User u where u.cartId = :cartid")
+	@Query("select u from User u where u.cartId = :cartid and u.delFlag = 0")
 	User findUserByCartId(@Param("cartid") Integer foo);
 	
-	@Query("select u from User u where u.userId = :userid")
-	User findUserById(@Param("userid") Integer uid);
 	
+	@Query("select u.delFlag from User u where u.userId = :userid")
+	Integer getDelFlag(@Param("userid") Integer uid);
 }

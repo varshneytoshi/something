@@ -34,7 +34,7 @@ public class ApplicationController {
 //    public String index() {
 //        return "Greetings from Spring Boot!";
 //    }
-	EntityManager em;
+
 	@Autowired
 	UserRepository userRepo;
 	@GetMapping("/greeting")
@@ -98,38 +98,33 @@ public class ApplicationController {
 	    @PostMapping("/cart")
 	    public ResponseEntity<User> getUserByCart(@RequestBody HashMap<String,String> map) {
 	    	User user = userRepo.findUserByCartId(Integer.parseInt(map.get("cartid")));
-	    	//User user=userrepo.findById(1).get();
 	    	return new ResponseEntity<User>(user, HttpStatus.OK);
 	    }
 	    
 	    @CrossOrigin
 	    @PostMapping("/getById")
 	    public ResponseEntity<User> getUserById(@RequestBody HashMap<String,String> map) {
-	    	User user = userRepo.findUserById(Integer.parseInt(map.get("userid")));
+	    	User user = userRepo.findById(Integer.parseInt(map.get("userid"))).get();
 	    	return new ResponseEntity<User>(user, HttpStatus.OK);
 	    }
 	    
-//	    @CrossOrigin
-//	    @PostMapping("/updateuser")
-//	    public ResponseEntity<User> updateUser(@RequestBody HashMap<String,String> map) {
-//	    	if(!userRepo.existsById(Integer.parseInt(map.get("userid"))))
-//	    	{
-//	    		throw new Exception("user doesn't exist");
-//	    	}
-//	    	return 
-//	    }
 	    
 	    @CrossOrigin
-	    @DeleteMapping("/deleteuser")
-	    public ResponseEntity<Object> deleteAnswer(@RequestBody HashMap<String,String> map) throws Exception {
-	        if(!userRepo.existsById(Integer.parseInt(map.get("userid")))) {
+	    @PostMapping("/deleteuser")
+	    public ResponseEntity<Integer> deleteUser(@RequestBody HashMap<String,String> map) throws Exception {
+//	        if(!userRepo.existsById(Integer.parseInt(map.get("userid")))) {
+	    	if(userRepo.getDelFlag(Integer.parseInt(map.get("userid")))==1){
 	            throw new Exception("user doesn't exist");
 	        }
-
-	        return userRepo.findById(Integer.parseInt(map.get("userid")))
-	                .map(user -> {
-	                    userRepo.delete(user);
-	                    return ResponseEntity.ok().build();
-	                }).orElseThrow(() -> new Exception("User not found with id " + Integer.parseInt(map.get("userid"))));
+//	        userRepo.updateDelFlag(Integer.parseInt(map.get("userid")));
+	    	User user = userRepo.findById(Integer.parseInt(map.get("userid"))).get();
+	    	user.setDelFlag(1);
+	    	userRepo.save(user);
+//	        return userRepo.findById(Integer.parseInt(map.get("userid")))
+//	                .map(user -> {
+//	                    userRepo.delete(user);
+//	                    return ResponseEntity.ok().build();
+//	                }).orElseThrow(() -> new Exception("User not found with id " + Integer.parseInt(map.get("userid"))));
+	    	return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	    }
 }

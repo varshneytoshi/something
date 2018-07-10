@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,11 +16,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.Cascade;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name="user")
-@EntityListeners(AuditingEntityListener.class)
 public class User  implements Serializable {
 
 private static final long serialVersionUID = -2054386655979281969L;
@@ -65,10 +62,6 @@ private static final long serialVersionUID = -2054386655979281969L;
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
 	}
-
-	@OneToOne(fetch = FetchType.EAGER ,mappedBy="user")
-	@Cascade(value=org.hibernate.annotations.CascadeType.ALL)
-	private Cart cart;
 	
 	@Column(name="Culture")
 	private int culture;
@@ -83,14 +76,6 @@ private static final long serialVersionUID = -2054386655979281969L;
 //	@OneToMany(fetch = FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
 //	@JoinTable(name="cust_coupon" , joinColumns = { @JoinColumn(name="custId")},inverseJoinColumns= {@JoinColumn(name="couponId")})
 //	private Set<Coupon> coupons = new HashSet<Coupon>();
-	
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
 
 	public int getCulture() {
 		return culture;
