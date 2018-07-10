@@ -89,6 +89,18 @@ CREATE TABLE `culture` (
 INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`, `del_flag`) VALUES
 (1, 'hindu', 1, '2018-07-02', 1, '2018-07-02', 0);
 
+
+INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
+(2, 'Punjabi', 1, '2018-07-02', 1, '2018-07-02',0);
+INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
+(3, 'Christian', 1, '2018-07-02', 1, '2018-07-02');
+INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
+(4, 'Islam', 1, '2018-07-02', 1, '2018-07-02');
+INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
+(5, 'Marathi', 1, '2018-07-02', 1, '2018-07-02');
+INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
+(6, 'Jain', 1, '2018-07-02', 1, '2018-07-02');
+
 -- --------------------------------------------------------
 
 --
