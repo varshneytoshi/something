@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2018 at 11:45 AM
+-- Generation Time: Jul 10, 2018 at 05:37 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -50,10 +50,10 @@ INSERT INTO `cart` (`cart_id`, `venue_id`, `menu_id`, `del_flag`) VALUES
 --
 
 CREATE TABLE `catering` (
-  `menu` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
   `package_name` varchar(50) DEFAULT NULL,
   `menu_description` varchar(1000) DEFAULT NULL,
-  `prive_per_plate` double DEFAULT NULL,
+  `price_per_plate` double DEFAULT NULL,
   `culture_id` int(11) NOT NULL,
   `package_type` int(2) DEFAULT NULL,
   `del_flag` int(1) DEFAULT NULL
@@ -63,7 +63,7 @@ CREATE TABLE `catering` (
 -- Dumping data for table `catering`
 --
 
-INSERT INTO `catering` (`menu`, `package_name`, `menu_description`, `prive_per_plate`, `culture_id`, `package_type`, `del_flag`) VALUES
+INSERT INTO `catering` (`menu_id`, `package_name`, `menu_description`, `price_per_plate`, `culture_id`, `package_type`, `del_flag`) VALUES
 (1, 'veg dinner', NULL, 100, 1, 0, 0);
 
 -- --------------------------------------------------------
@@ -87,19 +87,12 @@ CREATE TABLE `culture` (
 --
 
 INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`, `del_flag`) VALUES
-(1, 'hindu', 1, '2018-07-02', 1, '2018-07-02', 0);
-
-
-INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
-(2, 'Punjabi', 1, '2018-07-02', 1, '2018-07-02',0);
-INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
-(3, 'Christian', 1, '2018-07-02', 1, '2018-07-02');
-INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
-(4, 'Islam', 1, '2018-07-02', 1, '2018-07-02');
-INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
-(5, 'Marathi', 1, '2018-07-02', 1, '2018-07-02');
-INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`,`del_flag`) VALUES
-(6, 'Jain', 1, '2018-07-02', 1, '2018-07-02');
+(1, 'hindu', 1, '2018-07-02', 1, '2018-07-02', 0),
+(2, 'Punjabi', 1, '2018-07-02', 1, '2018-07-02', 0),
+(3, 'Christian', 1, '2018-07-02', 1, '2018-07-02', 0),
+(4, 'Islam', 1, '2018-07-02', 1, '2018-07-02', 0),
+(5, 'Marathi', 1, '2018-07-02', 1, '2018-07-02', 0),
+(6, 'Jain', 1, '2018-07-02', 1, '2018-07-02', 0);
 
 -- --------------------------------------------------------
 
@@ -131,7 +124,7 @@ CREATE TABLE `event_item_mapper` (
   `ei_mapper_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `cart_id` int(11) NOT NULL,
   `del_flag` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -139,9 +132,10 @@ CREATE TABLE `event_item_mapper` (
 -- Dumping data for table `event_item_mapper`
 --
 
-INSERT INTO `event_item_mapper` (`ei_mapper_id`, `event_id`, `item_id`, `user_id`, `del_flag`) VALUES
+INSERT INTO `event_item_mapper` (`ei_mapper_id`, `event_id`, `item_id`, `cart_id`, `del_flag`) VALUES
 (1, 1, 1, 1, 0),
-(2, 1, 1, 2, 0);
+(2, 1, 1, 2, 0),
+(3, 1, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -164,7 +158,8 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`item_id`, `item_name`, `item_type`, `item_description`, `item_price`, `item_images`, `del_flag`) VALUES
-(1, 'lamp', 'mehendi', 'light', 100, NULL, 0);
+(1, 'lamp', 'mehendi', 'light', 100, NULL, 0),
+(2, 'flowers', 'decor', 'decoration', 100, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -186,7 +181,18 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `venue_id`, `menu_id`, `total_price`, `del_flag`) VALUES
-(1, 1, 1, 1, 110000, 0);
+(1, 1, 1, 1, 110000, 1),
+(2, 2, 1, 1, 12000, 0),
+(3, 1, 1, 1, 10000, 0),
+(6, 1, 1, 1, 0, 0),
+(7, 1, 1, 1, 0, 0),
+(8, 1, 1, 1, 0, 0),
+(9, 1, 1, 1, 0, 0),
+(10, 1, 1, 1, 0, 0),
+(11, 1, 1, 1, 0, 0),
+(12, 1, 1, 1, 0, 0),
+(13, 1, 1, 1, 0, 0),
+(14, 1, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -198,15 +204,9 @@ CREATE TABLE `order_item_mapper` (
   `oi_mapper_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `del_flag` int(1) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `del_flag` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order_item_mapper`
---
-
-INSERT INTO `order_item_mapper` (`oi_mapper_id`, `order_id`, `item_id`, `del_flag`) VALUES
-(1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -276,7 +276,7 @@ ALTER TABLE `cart`
 -- Indexes for table `catering`
 --
 ALTER TABLE `catering`
-  ADD PRIMARY KEY (`menu`);
+  ADD PRIMARY KEY (`menu_id`);
 
 --
 -- Indexes for table `culture`
@@ -288,16 +288,17 @@ ALTER TABLE `culture`
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
-  ADD PRIMARY KEY (`event_id`);
+  ADD PRIMARY KEY (`event_id`),
+  ADD KEY `culture_id` (`culture_id`);
 
 --
 -- Indexes for table `event_item_mapper`
 --
 ALTER TABLE `event_item_mapper`
   ADD PRIMARY KEY (`ei_mapper_id`),
-  ADD KEY `user_id` (`user_id`),
   ADD KEY `EventId` (`event_id`),
-  ADD KEY `ItemId` (`item_id`);
+  ADD KEY `ItemId` (`item_id`),
+  ADD KEY `cart_id` (`cart_id`);
 
 --
 -- Indexes for table `items`
@@ -310,17 +311,18 @@ ALTER TABLE `items`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `UserId` (`user_id`),
   ADD KEY `MenuId` (`menu_id`),
-  ADD KEY `VenueID` (`venue_id`);
+  ADD KEY `VenueID` (`venue_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
   ADD PRIMARY KEY (`oi_mapper_id`),
-  ADD KEY `ItemId` (`item_id`),
-  ADD KEY `OrderId` (`order_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `item_id` (`item_id`),
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- Indexes for table `user`
@@ -343,37 +345,37 @@ ALTER TABLE `venue`
 -- AUTO_INCREMENT for table `catering`
 --
 ALTER TABLE `catering`
-  MODIFY `menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `menu_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `culture`
 --
 ALTER TABLE `culture`
-  MODIFY `culture_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `culture_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `event_item_mapper`
 --
 ALTER TABLE `event_item_mapper`
-  MODIFY `ei_mapper_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ei_mapper_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `item_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `item_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
-  MODIFY `oi_mapper_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `oi_mapper_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -395,31 +397,38 @@ ALTER TABLE `venue`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `catering` (`menu`),
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `catering` (`menu_id`),
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`venue_id`) REFERENCES `venue` (`venue_id`);
+
+--
+-- Constraints for table `events`
+--
+ALTER TABLE `events`
+  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`culture_id`) REFERENCES `culture` (`culture_id`);
 
 --
 -- Constraints for table `event_item_mapper`
 --
 ALTER TABLE `event_item_mapper`
-  ADD CONSTRAINT `event_item_mapper_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `event_item_mapper_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`),
-  ADD CONSTRAINT `event_item_mapper_ibfk_3` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
+  ADD CONSTRAINT `event_item_mapper_ibfk_3` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
+  ADD CONSTRAINT `event_item_mapper_ibfk_4` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`);
 
 --
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `catering` (`menu`),
-  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`venue_id`) REFERENCES `venue` (`venue_id`);
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `catering` (`menu_id`),
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`venue_id`) REFERENCES `venue` (`venue_id`),
+  ADD CONSTRAINT `orders_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
-  ADD CONSTRAINT `order_item_mapper_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
-  ADD CONSTRAINT `order_item_mapper_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
+  ADD CONSTRAINT `order_item_mapper_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `order_item_mapper_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
+  ADD CONSTRAINT `order_item_mapper_ibfk_3` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 --
 -- Constraints for table `user`
