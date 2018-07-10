@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 09, 2018 at 04:19 PM
+-- Generation Time: Jul 10, 2018 at 07:04 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -90,6 +90,39 @@ INSERT INTO `culture` (`CultureId`, `CultureName`, `Culture_Creation_Id`, `Cultu
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `events`
+--
+
+CREATE TABLE `events` (
+  `EventId` int(11) NOT NULL,
+  `EventName` varchar(30) DEFAULT NULL,
+  `CultureId` int(11) NOT NULL,
+  `DelFlag` varchar(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `events`
+--
+
+INSERT INTO `events` (`EventId`, `EventName`, `CultureId`, `DelFlag`) VALUES
+(1, 'Mehendi', 1, 'f');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event_item_mapper`
+--
+
+CREATE TABLE `event_item_mapper` (
+  `MapperId` int(11) NOT NULL,
+  `EventId` int(11) NOT NULL,
+  `ItemId` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `items`
 --
 
@@ -131,6 +164,18 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`OrderId`, `UserId`, `VenueID`, `MenuId`, `TotalPrice`, `DelFlag`) VALUES
 (1, 1, 1, 1, 110000, 'f');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_item_mapper`
+--
+
+CREATE TABLE `order_item_mapper` (
+  `OIMapperId` int(11) NOT NULL,
+  `OrderId` int(11) NOT NULL,
+  `ItemId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -208,6 +253,21 @@ ALTER TABLE `culture`
   ADD PRIMARY KEY (`CultureId`);
 
 --
+-- Indexes for table `events`
+--
+ALTER TABLE `events`
+  ADD PRIMARY KEY (`EventId`);
+
+--
+-- Indexes for table `event_item_mapper`
+--
+ALTER TABLE `event_item_mapper`
+  ADD PRIMARY KEY (`MapperId`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `EventId` (`EventId`),
+  ADD KEY `ItemId` (`ItemId`);
+
+--
 -- Indexes for table `items`
 --
 ALTER TABLE `items`
@@ -221,6 +281,14 @@ ALTER TABLE `orders`
   ADD KEY `UserId` (`UserId`),
   ADD KEY `MenuId` (`MenuId`),
   ADD KEY `VenueID` (`VenueID`);
+
+--
+-- Indexes for table `order_item_mapper`
+--
+ALTER TABLE `order_item_mapper`
+  ADD PRIMARY KEY (`OIMapperId`),
+  ADD KEY `ItemId` (`ItemId`),
+  ADD KEY `OrderId` (`OrderId`);
 
 --
 -- Indexes for table `user`
@@ -252,6 +320,12 @@ ALTER TABLE `culture`
   MODIFY `CultureId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `event_item_mapper`
+--
+ALTER TABLE `event_item_mapper`
+  MODIFY `MapperId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
@@ -262,6 +336,12 @@ ALTER TABLE `items`
 --
 ALTER TABLE `orders`
   MODIFY `OrderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `order_item_mapper`
+--
+ALTER TABLE `order_item_mapper`
+  MODIFY `OIMapperId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -287,12 +367,27 @@ ALTER TABLE `cart`
   ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`VenueId`) REFERENCES `venue` (`VenueId`);
 
 --
+-- Constraints for table `event_item_mapper`
+--
+ALTER TABLE `event_item_mapper`
+  ADD CONSTRAINT `event_item_mapper_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `event_item_mapper_ibfk_2` FOREIGN KEY (`EventId`) REFERENCES `events` (`EventId`),
+  ADD CONSTRAINT `event_item_mapper_ibfk_3` FOREIGN KEY (`ItemId`) REFERENCES `items` (`ItemId`);
+
+--
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`MenuId`) REFERENCES `catering` (`MenuId`),
   ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`VenueID`) REFERENCES `venue` (`VenueId`);
+
+--
+-- Constraints for table `order_item_mapper`
+--
+ALTER TABLE `order_item_mapper`
+  ADD CONSTRAINT `order_item_mapper_ibfk_1` FOREIGN KEY (`ItemId`) REFERENCES `items` (`ItemId`),
+  ADD CONSTRAINT `order_item_mapper_ibfk_2` FOREIGN KEY (`OrderId`) REFERENCES `orders` (`OrderId`);
 
 --
 -- Constraints for table `user`
