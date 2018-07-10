@@ -36,7 +36,7 @@ private Double venuePrice;
 private int venueCapacity;
 
 @Column(name="DelFlag")
-private boolean delFlag;
+private int delFlag;
 
 public int getVenueId() {
 	return venueId;
@@ -86,11 +86,11 @@ public void setVenueCapacity(int venueCapacity) {
 	this.venueCapacity = venueCapacity;
 }
 
-public boolean isDelFlag() {
+public int isDelFlag() {
 	return delFlag;
 }
 
-public void setDelFlag(boolean delFlag) {
+public void setDelFlag(int delFlag) {
 	this.delFlag = delFlag;
 }
 

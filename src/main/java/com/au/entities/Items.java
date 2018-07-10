@@ -43,7 +43,7 @@ private Double itemPrice;
 private String itemImages;
 
 @Column(name="DelFlag")
-private boolean delFlag;
+private int delFlag;
 
 public int getItemId() {
 	return itemId;
@@ -93,11 +93,11 @@ public void setItemImages(String itemImages) {
 	this.itemImages = itemImages;
 }
 
-public boolean isDelFlag() {
+public int isDelFlag() {
 	return delFlag;
 }
 
-public void setDelFlag(boolean delFlag) {
+public void setDelFlag(int delFlag) {
 	this.delFlag = delFlag;
 }
 

@@ -23,7 +23,7 @@ private static final long serialVersionUID = -2054386655979281129L;
 	@Column(name="EventName")
 	private int eventName;
 	
-	public Events(int eventId, int eventName, int cultureId, char delFlag) {
+	public Events(int eventId, int eventName, int cultureId, int delFlag) {
 		super();
 		this.eventId = eventId;
 		this.eventName = eventName;
@@ -40,7 +40,7 @@ private static final long serialVersionUID = -2054386655979281129L;
 	private int cultureId;
 	
 	@Column(name="DelFlag")
-	private char delFlag;
+	private int delFlag;
 
 	public int getEventId() {
 		return eventId;
@@ -66,11 +66,11 @@ private static final long serialVersionUID = -2054386655979281129L;
 		this.cultureId = cultureId;
 	}
 
-	public char getDelFlag() {
+	public int getDelFlag() {
 		return delFlag;
 	}
 
-	public void setDelFlag(char delFlag) {
+	public void setDelFlag(int delFlag) {
 		this.delFlag = delFlag;
 	}
 

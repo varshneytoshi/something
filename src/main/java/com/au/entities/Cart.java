@@ -46,7 +46,7 @@ private static final long serialVersionUID = -2054386655979281129L;
 
 
 	@Column(name="DelFlag")
-	private char delFlag;
+	private int delFlag;
 
 
 	public int getCartId() {
@@ -89,12 +89,12 @@ private static final long serialVersionUID = -2054386655979281129L;
 //	}
 //
 
-	public char getDelFlag() {
+	public int getDelFlag() {
 		return delFlag;
 	}
 
 
-	public void setDelFlag(char delFlag) {
+	public void setDelFlag(int delFlag) {
 		this.delFlag = delFlag;
 	}
 	
