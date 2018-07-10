@@ -1,6 +1,5 @@
 package com.au.entities;
 
-
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -24,6 +23,19 @@ private static final long serialVersionUID = -2054386655979281129L;
 	@Column(name="EventName")
 	private int eventName;
 	
+	public Events(int eventId, int eventName, int cultureId, char delFlag) {
+		super();
+		this.eventId = eventId;
+		this.eventName = eventName;
+		this.cultureId = cultureId;
+		this.delFlag = delFlag;
+	}
+
+	public Events() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	@Column(name="CultureId")
 	private int cultureId;
 	
@@ -56,19 +68,6 @@ private static final long serialVersionUID = -2054386655979281129L;
 
 	public char getDelFlag() {
 		return delFlag;
-	}
-
-	public Events() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Events(int eventId, int eventName, int cultureId, char delFlag) {
-		super();
-		this.eventId = eventId;
-		this.eventName = eventName;
-		this.cultureId = cultureId;
-		this.delFlag = delFlag;
 	}
 
 	public void setDelFlag(char delFlag) {

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +34,7 @@ public class ApplicationController {
 //    public String index() {
 //        return "Greetings from Spring Boot!";
 //    }
-	
+	EntityManager em;
 	@Autowired
 	UserRepository userRepo;
 	@GetMapping("/greeting")
@@ -103,5 +107,29 @@ public class ApplicationController {
 	    public ResponseEntity<User> getUserById(@RequestBody HashMap<String,String> map) {
 	    	User user = userRepo.findUserById(Integer.parseInt(map.get("userid")));
 	    	return new ResponseEntity<User>(user, HttpStatus.OK);
+	    }
+	    
+//	    @CrossOrigin
+//	    @PostMapping("/updateuser")
+//	    public ResponseEntity<User> updateUser(@RequestBody HashMap<String,String> map) {
+//	    	if(!userRepo.existsById(Integer.parseInt(map.get("userid"))))
+//	    	{
+//	    		throw new Exception("user doesn't exist");
+//	    	}
+//	    	return 
+//	    }
+	    
+	    @CrossOrigin
+	    @DeleteMapping("/deleteuser")
+	    public ResponseEntity<Object> deleteAnswer(@RequestBody HashMap<String,String> map) throws Exception {
+	        if(!userRepo.existsById(Integer.parseInt(map.get("userid")))) {
+	            throw new Exception("user doesn't exist");
+	        }
+
+	        return userRepo.findById(Integer.parseInt(map.get("userid")))
+	                .map(user -> {
+	                    userRepo.delete(user);
+	                    return ResponseEntity.ok().build();
+	                }).orElseThrow(() -> new Exception("User not found with id " + Integer.parseInt(map.get("userid"))));
 	    }
 }
