@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2018 at 07:04 AM
+-- Generation Time: Jul 10, 2018 at 07:31 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -29,17 +29,17 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `cart` (
-  `CartId` int(10) NOT NULL,
-  `VenueId` int(10) NOT NULL,
-  `MenuId` int(10) NOT NULL,
-  `DelFlag` varchar(2) NOT NULL
+  `cart_id` int(10) NOT NULL,
+  `venue_id` int(10) NOT NULL,
+  `menu_id` int(10) NOT NULL,
+  `del_flag` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`CartId`, `VenueId`, `MenuId`, `DelFlag`) VALUES
+INSERT INTO `cart` (`cart_id`, `venue_id`, `menu_id`, `del_flag`) VALUES
 (1, 1, 1, 'f');
 
 -- --------------------------------------------------------
@@ -49,20 +49,20 @@ INSERT INTO `cart` (`CartId`, `VenueId`, `MenuId`, `DelFlag`) VALUES
 --
 
 CREATE TABLE `catering` (
-  `MenuId` int(11) NOT NULL,
-  `PackageName` varchar(50) DEFAULT NULL,
-  `MenuDescription` varchar(1000) DEFAULT NULL,
-  `PricePerPlate` double DEFAULT NULL,
-  `CultureId` int(11) NOT NULL,
-  `PackageType` int(2) DEFAULT NULL,
-  `DelFlag` varchar(2) DEFAULT NULL
+  `menu` int(11) NOT NULL,
+  `package_name` varchar(50) DEFAULT NULL,
+  `menu_description` varchar(1000) DEFAULT NULL,
+  `prive_per_plate` double DEFAULT NULL,
+  `culture_id` int(11) NOT NULL,
+  `package_type` int(2) DEFAULT NULL,
+  `d` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `catering`
 --
 
-INSERT INTO `catering` (`MenuId`, `PackageName`, `MenuDescription`, `PricePerPlate`, `CultureId`, `PackageType`, `DelFlag`) VALUES
+INSERT INTO `catering` (`menu`, `package_name`, `menu_description`, `prive_per_plate`, `culture_id`, `package_type`, `d`) VALUES
 (1, 'veg dinner', NULL, 100, 1, 0, 'f');
 
 -- --------------------------------------------------------
@@ -72,19 +72,19 @@ INSERT INTO `catering` (`MenuId`, `PackageName`, `MenuDescription`, `PricePerPla
 --
 
 CREATE TABLE `culture` (
-  `CultureId` int(10) NOT NULL,
-  `CultureName` varchar(20) NOT NULL,
-  `Culture_Creation_Id` int(10) DEFAULT NULL,
-  `Culture_Creation_Date` date DEFAULT NULL,
-  `Culture_Modification_Id` int(10) DEFAULT NULL,
-  `Culture_Modification_Date` date DEFAULT NULL
+  `culture_id` int(10) NOT NULL,
+  `culture_name` varchar(20) NOT NULL,
+  `culture_creation_id` int(10) DEFAULT NULL,
+  `culture_creation_date` date DEFAULT NULL,
+  `culture_modification_id` int(10) DEFAULT NULL,
+  `culture_modification_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `culture`
 --
 
-INSERT INTO `culture` (`CultureId`, `CultureName`, `Culture_Creation_Id`, `Culture_Creation_Date`, `Culture_Modification_Id`, `Culture_Modification_Date`) VALUES
+INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`) VALUES
 (1, 'hindu', 1, '2018-07-02', 1, '2018-07-02');
 
 -- --------------------------------------------------------
@@ -94,17 +94,17 @@ INSERT INTO `culture` (`CultureId`, `CultureName`, `Culture_Creation_Id`, `Cultu
 --
 
 CREATE TABLE `events` (
-  `EventId` int(11) NOT NULL,
-  `EventName` varchar(30) DEFAULT NULL,
-  `CultureId` int(11) NOT NULL,
-  `DelFlag` varchar(2) DEFAULT NULL
+  `event_id` int(11) NOT NULL,
+  `event_name` varchar(30) DEFAULT NULL,
+  `culture_id` int(11) NOT NULL,
+  `del_flag` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `events`
 --
 
-INSERT INTO `events` (`EventId`, `EventName`, `CultureId`, `DelFlag`) VALUES
+INSERT INTO `events` (`event_id`, `event_name`, `culture_id`, `del_flag`) VALUES
 (1, 'Mehendi', 1, 'f');
 
 -- --------------------------------------------------------
@@ -114,9 +114,9 @@ INSERT INTO `events` (`EventId`, `EventName`, `CultureId`, `DelFlag`) VALUES
 --
 
 CREATE TABLE `event_item_mapper` (
-  `MapperId` int(11) NOT NULL,
-  `EventId` int(11) NOT NULL,
-  `ItemId` int(11) NOT NULL,
+  `ei_mapper_id` int(11) NOT NULL,
+  `event_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -127,20 +127,20 @@ CREATE TABLE `event_item_mapper` (
 --
 
 CREATE TABLE `items` (
-  `ItemId` int(10) NOT NULL,
-  `ItemName` varchar(30) DEFAULT NULL,
-  `ItemType` varchar(20) DEFAULT NULL,
-  `ItemDesription` varchar(100) DEFAULT NULL,
-  `ItemPrice` double NOT NULL,
-  `ItemImages` varchar(1000) DEFAULT NULL,
-  `DelFlag` varchar(2) DEFAULT NULL
+  `item_id` int(10) NOT NULL,
+  `item_name` varchar(30) DEFAULT NULL,
+  `item_type` varchar(20) DEFAULT NULL,
+  `item_description` varchar(100) DEFAULT NULL,
+  `item_price` double NOT NULL,
+  `item_images` varchar(1000) DEFAULT NULL,
+  `del_flag` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `items`
 --
 
-INSERT INTO `items` (`ItemId`, `ItemName`, `ItemType`, `ItemDesription`, `ItemPrice`, `ItemImages`, `DelFlag`) VALUES
+INSERT INTO `items` (`item_id`, `item_name`, `item_type`, `item_description`, `item_price`, `item_images`, `del_flag`) VALUES
 (1, 'lamp', 'mehendi', 'light', 100, NULL, 'f');
 
 -- --------------------------------------------------------
@@ -150,19 +150,19 @@ INSERT INTO `items` (`ItemId`, `ItemName`, `ItemType`, `ItemDesription`, `ItemPr
 --
 
 CREATE TABLE `orders` (
-  `OrderId` int(11) NOT NULL,
-  `UserId` int(11) NOT NULL,
-  `VenueID` int(11) NOT NULL,
-  `MenuId` int(11) NOT NULL,
-  `TotalPrice` double DEFAULT NULL,
-  `DelFlag` varchar(2) DEFAULT NULL
+  `order_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `venue_id` int(11) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  `total_price` double DEFAULT NULL,
+  `del_flag` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`OrderId`, `UserId`, `VenueID`, `MenuId`, `TotalPrice`, `DelFlag`) VALUES
+INSERT INTO `orders` (`order_id`, `user_id`, `venue_id`, `menu_id`, `total_price`, `del_flag`) VALUES
 (1, 1, 1, 1, 110000, 'f');
 
 -- --------------------------------------------------------
@@ -172,9 +172,9 @@ INSERT INTO `orders` (`OrderId`, `UserId`, `VenueID`, `MenuId`, `TotalPrice`, `D
 --
 
 CREATE TABLE `order_item_mapper` (
-  `OIMapperId` int(11) NOT NULL,
-  `OrderId` int(11) NOT NULL,
-  `ItemId` int(11) NOT NULL
+  `oi_mapper_id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -212,20 +212,20 @@ INSERT INTO `user` (`user_id`, `usermail_id`, `culture`, `del_flag`, `est_budget
 --
 
 CREATE TABLE `venue` (
-  `VenueId` int(11) NOT NULL,
-  `VenueName` varchar(100) DEFAULT NULL,
-  `VenueType` varchar(50) DEFAULT NULL,
-  `VenueLocation` varchar(1000) DEFAULT NULL,
-  `VenuePrice` double DEFAULT NULL,
-  `VenueCapacity` int(10) DEFAULT NULL,
-  `DelFlag` varchar(2) DEFAULT NULL
+  `venue_id` int(11) NOT NULL,
+  `venue_name` varchar(100) DEFAULT NULL,
+  `venue_type` varchar(50) DEFAULT NULL,
+  `venue_location` varchar(1000) DEFAULT NULL,
+  `venue_price` double DEFAULT NULL,
+  `venue_capacity` int(10) DEFAULT NULL,
+  `del_flag` varchar(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `venue`
 --
 
-INSERT INTO `venue` (`VenueId`, `VenueName`, `VenueType`, `VenueLocation`, `VenuePrice`, `VenueCapacity`, `DelFlag`) VALUES
+INSERT INTO `venue` (`venue_id`, `venue_name`, `venue_type`, `venue_location`, `venue_price`, `venue_capacity`, `del_flag`) VALUES
 (1, 'goa hall', 'destination', 'goa', 100000, 1000, 'f');
 
 --
@@ -236,59 +236,59 @@ INSERT INTO `venue` (`VenueId`, `VenueName`, `VenueType`, `VenueLocation`, `Venu
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`CartId`),
-  ADD KEY `MenuId` (`MenuId`),
-  ADD KEY `VenueId` (`VenueId`);
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `MenuId` (`menu_id`),
+  ADD KEY `VenueId` (`venue_id`);
 
 --
 -- Indexes for table `catering`
 --
 ALTER TABLE `catering`
-  ADD PRIMARY KEY (`MenuId`);
+  ADD PRIMARY KEY (`menu`);
 
 --
 -- Indexes for table `culture`
 --
 ALTER TABLE `culture`
-  ADD PRIMARY KEY (`CultureId`);
+  ADD PRIMARY KEY (`culture_id`);
 
 --
 -- Indexes for table `events`
 --
 ALTER TABLE `events`
-  ADD PRIMARY KEY (`EventId`);
+  ADD PRIMARY KEY (`event_id`);
 
 --
 -- Indexes for table `event_item_mapper`
 --
 ALTER TABLE `event_item_mapper`
-  ADD PRIMARY KEY (`MapperId`),
+  ADD PRIMARY KEY (`ei_mapper_id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `EventId` (`EventId`),
-  ADD KEY `ItemId` (`ItemId`);
+  ADD KEY `EventId` (`event_id`),
+  ADD KEY `ItemId` (`item_id`);
 
 --
 -- Indexes for table `items`
 --
 ALTER TABLE `items`
-  ADD PRIMARY KEY (`ItemId`);
+  ADD PRIMARY KEY (`item_id`);
 
 --
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
-  ADD PRIMARY KEY (`OrderId`),
-  ADD KEY `UserId` (`UserId`),
-  ADD KEY `MenuId` (`MenuId`),
-  ADD KEY `VenueID` (`VenueID`);
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `UserId` (`user_id`),
+  ADD KEY `MenuId` (`menu_id`),
+  ADD KEY `VenueID` (`venue_id`);
 
 --
 -- Indexes for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
-  ADD PRIMARY KEY (`OIMapperId`),
-  ADD KEY `ItemId` (`ItemId`),
-  ADD KEY `OrderId` (`OrderId`);
+  ADD PRIMARY KEY (`oi_mapper_id`),
+  ADD KEY `ItemId` (`item_id`),
+  ADD KEY `OrderId` (`order_id`);
 
 --
 -- Indexes for table `user`
@@ -301,7 +301,7 @@ ALTER TABLE `user`
 -- Indexes for table `venue`
 --
 ALTER TABLE `venue`
-  ADD PRIMARY KEY (`VenueId`);
+  ADD PRIMARY KEY (`venue_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -311,37 +311,37 @@ ALTER TABLE `venue`
 -- AUTO_INCREMENT for table `catering`
 --
 ALTER TABLE `catering`
-  MODIFY `MenuId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `menu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `culture`
 --
 ALTER TABLE `culture`
-  MODIFY `CultureId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `culture_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `event_item_mapper`
 --
 ALTER TABLE `event_item_mapper`
-  MODIFY `MapperId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ei_mapper_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `ItemId` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `item_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
-  MODIFY `OIMapperId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `oi_mapper_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -353,7 +353,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `venue`
 --
 ALTER TABLE `venue`
-  MODIFY `VenueId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `venue_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -363,37 +363,37 @@ ALTER TABLE `venue`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`MenuId`) REFERENCES `catering` (`MenuId`),
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`VenueId`) REFERENCES `venue` (`VenueId`);
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `catering` (`menu`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`venue_id`) REFERENCES `venue` (`venue_id`);
 
 --
 -- Constraints for table `event_item_mapper`
 --
 ALTER TABLE `event_item_mapper`
   ADD CONSTRAINT `event_item_mapper_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `event_item_mapper_ibfk_2` FOREIGN KEY (`EventId`) REFERENCES `events` (`EventId`),
-  ADD CONSTRAINT `event_item_mapper_ibfk_3` FOREIGN KEY (`ItemId`) REFERENCES `items` (`ItemId`);
+  ADD CONSTRAINT `event_item_mapper_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`),
+  ADD CONSTRAINT `event_item_mapper_ibfk_3` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`);
 
 --
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`MenuId`) REFERENCES `catering` (`MenuId`),
-  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`VenueID`) REFERENCES `venue` (`VenueId`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `catering` (`menu`),
+  ADD CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`venue_id`) REFERENCES `venue` (`venue_id`);
 
 --
 -- Constraints for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
-  ADD CONSTRAINT `order_item_mapper_ibfk_1` FOREIGN KEY (`ItemId`) REFERENCES `items` (`ItemId`),
-  ADD CONSTRAINT `order_item_mapper_ibfk_2` FOREIGN KEY (`OrderId`) REFERENCES `orders` (`OrderId`);
+  ADD CONSTRAINT `order_item_mapper_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
+  ADD CONSTRAINT `order_item_mapper_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
 --
 -- Constraints for table `user`
 --
 ALTER TABLE `user`
-  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`CartId`);
+  ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
