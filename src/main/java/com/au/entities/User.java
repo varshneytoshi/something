@@ -20,9 +20,21 @@ import org.hibernate.annotations.Cascade;
 @Entity
 @Table(name="user")
 public class User  implements Serializable {
-
+public static double totalPrice = 0;
 private static final long serialVersionUID = -2054386655979281969L;
 	
+	public static double getTotalPrice() {
+	return totalPrice;
+}
+
+public static void setTotalPrice(double totalPrice) {
+	User.totalPrice = totalPrice;
+}
+
+public int getDelFlag() {
+	return delFlag;
+}
+
 	public User() {
 }
 

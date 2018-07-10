@@ -1,7 +1,9 @@
 package com.au.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -34,7 +36,7 @@ public class Orders implements Serializable{
 	//add lib for it @JsonIgnore
 	@ManyToMany(fetch = FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
 	@JoinTable(name="order_item_mapper" , joinColumns = { @JoinColumn(name="OrderId")},inverseJoinColumns= {@JoinColumn(name="ItemId")})
-	Set<Items> ItemsPurchased=new HashSet<Items>();
+	List<Items> ItemsPurchased=new ArrayList<Items>();
 
 
 	@Column(name="TotalPrice")
@@ -75,11 +77,11 @@ public class Orders implements Serializable{
 		this.menuId = menuId;
 	}
 
-	public Set<Items> getItemsPurchased() {
+	public List<Items> getItemsPurchased() {
 		return ItemsPurchased;
 	}
 
-	public void setItemsPurchased(Set<Items> itemsPurchased) {
+	public void setItemsPurchased(List<Items> itemsPurchased) {
 		ItemsPurchased = itemsPurchased;
 	}
 
