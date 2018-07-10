@@ -12,13 +12,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.au.entities.EventItemMapper;
+import com.au.entities.OrderItemMapper;
 import com.au.entities.Orders;
+import com.au.entities.User;
+import com.au.repositories.OrderItemRepository;
 import com.au.repositories.OrderRepository;
+import com.au.repositories.UserRepository;
 
 @Controller
 public class OrderController {
 	@Autowired
 	OrderRepository orderRepo;
+	@Autowired
+	OrderItemRepository oiRepo;
+	@Autowired
+	UserRepository userRepo;
 	
 	@CrossOrigin
 	@PostMapping("/getOrders")
@@ -38,6 +47,20 @@ public class OrderController {
     	orderRepo.save(order);
     	return new ResponseEntity<Integer>(1, HttpStatus.OK);
     }
+	
+	@CrossOrigin
+	@PostMapping("/setOrderItem")
+	public ResponseEntity<Integer> setorderitem(@RequestBody HashMap<String, String> itemsObject) {
+		int orderId=Integer.parseInt(itemsObject.get("orderId"));
+		Orders order = orderRepo.findById(orderId).get();
+		int itemId=Integer.parseInt(itemsObject.get("itemId"));
+		int eventId=Integer.parseInt(itemsObject.get("eventId"));
+		OrderItemMapper oiMapper=new OrderItemMapper();
+		oiMapper.setOrderId(orderId);
+		oiMapper.setItemId(itemId);
+		oiRepo.save(oiMapper);	
+		return new ResponseEntity<Integer>(0,HttpStatus.OK);
+	}
 	
 //	@CrossOrigin
 //	@PostMapping("/addToOrderItem")

@@ -15,11 +15,22 @@ public class EventItemMapper {
 	@Column(name="EventId")
 	private int eventId;
 	
+	public int getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(int delFlag) {
+		this.delFlag = delFlag;
+	}
+
 	@Column(name="ItemId")
 	private int itemId;
 	
 	@Column(name="CartId")
 	private int cartId;
+	
+	@Column(name="DelFlag")
+	private int delFlag;
 
 	public int getEiMapperId() {
 		return eiMapperId;

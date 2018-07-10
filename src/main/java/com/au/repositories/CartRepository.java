@@ -14,6 +14,6 @@ public interface CartRepository extends JpaRepository<Cart,Integer> {
 	@Query("select c.delFlag from Cart c where c.cartId = :cartid")
 	Integer getDelFlag(@Param("cartid") Integer cid);
 	
-	@Query("select ei.itemId from EventItemMapper ei where ei.cartId = :cartid")
-	List<Items> getItems(@Param("cartid") Integer cid);
+	@Query("select ei.itemId from EventItemMapper ei where ei.cartId = :cartid and ei.delFlag = 0")
+	List<Integer> getItems(@Param("cartid") Integer cid);
 }

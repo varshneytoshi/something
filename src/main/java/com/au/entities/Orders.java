@@ -34,9 +34,9 @@ public class Orders implements Serializable{
 	private int menuId;
 	
 	//add lib for it @JsonIgnore
-	@ManyToMany(fetch = FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
-	@JoinTable(name="order_item_mapper" , joinColumns = { @JoinColumn(name="OrderId")},inverseJoinColumns= {@JoinColumn(name="ItemId")})
-	List<Items> ItemsPurchased=new ArrayList<Items>();
+//	@ManyToMany(fetch = FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
+//	@JoinTable(name="order_item_mapper" , joinColumns = { @JoinColumn(name="OrderId")},inverseJoinColumns= {@JoinColumn(name="ItemId")})
+//	List<Items> ItemsPurchased=new ArrayList<Items>();
 
 
 	@Column(name="TotalPrice")
@@ -77,13 +77,13 @@ public class Orders implements Serializable{
 		this.menuId = menuId;
 	}
 
-	public List<Items> getItemsPurchased() {
-		return ItemsPurchased;
-	}
-
-	public void setItemsPurchased(List<Items> itemsPurchased) {
-		ItemsPurchased = itemsPurchased;
-	}
+//	public List<Items> getItemsPurchased() {
+//		return ItemsPurchased;
+//	}
+//
+//	public void setItemsPurchased(List<Items> itemsPurchased) {
+//		ItemsPurchased = itemsPurchased;
+//	}
 
 	public double getTotalPrice() {
 		return totalPrice;

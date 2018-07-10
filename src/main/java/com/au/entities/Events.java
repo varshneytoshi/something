@@ -21,9 +21,9 @@ private static final long serialVersionUID = -2054386655979281129L;
 	private int eventId;
 	
 	@Column(name="EventName")
-	private int eventName;
+	private String eventName;
 	
-	public Events(int eventId, int eventName, int cultureId, int delFlag) {
+	public Events(int eventId, String eventName, int cultureId, int delFlag) {
 		super();
 		this.eventId = eventId;
 		this.eventName = eventName;
@@ -50,11 +50,11 @@ private static final long serialVersionUID = -2054386655979281129L;
 		this.eventId = eventId;
 	}
 
-	public int getEventName() {
+	public String getEventName() {
 		return eventName;
 	}
 
-	public void setEventName(int eventName) {
+	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
 

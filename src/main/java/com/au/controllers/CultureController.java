@@ -44,6 +44,4 @@ public class CultureController {
 		return new ResponseEntity<Integer>(cultureId, HttpStatus.OK);
 	}
 
-
-
 }
