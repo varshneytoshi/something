@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import com.au.repositories.UserRepository;
 import com.au.repositories.VenueRepository;
 
 
-
+@Controller
 public class VenueController {
 
 	@Autowired
@@ -28,7 +29,7 @@ public class VenueController {
 	@CrossOrigin
 	@PostMapping("/getVenues")
 	public ResponseEntity<List<Venue>> getVenueList(@RequestBody HashMap<String, String> filters) {
-		User user = userRepo.findUserById(Integer.parseInt(filters.get("userid")));
+		User user = userRepo.findById(Integer.parseInt(filters.get("userId"))).get();
 		double priceBound=calculateVenuePriceUpperBound(user.getEstBudget(),user.getNoOfWeddingDays());	
 		String location=filters.get("Location");
 		int noOfGuests=user.getNoOfGuest();
@@ -41,14 +42,4 @@ public class VenueController {
 		
 	}
 
-	@CrossOrigin
-	@PostMapping("/setVenue")
-	public int setVenueList(@RequestBody HashMap<String, String> VenueObject) {
-		User user = userRepo.findUserById(Integer.parseInt(VenueObject.get("userid")));
-		
-		
-		return 0;
-		
-		
-	}
 }

@@ -8,10 +8,12 @@ import org.springframework.data.repository.query.Param;
 
 import com.au.entities.Catering;
 import com.au.entities.User;
+import com.au.entities.Venue;
 
 public interface CateringRepository extends JpaRepository<Catering, Integer>{
 
-	@Query("select c from Catering c where c.pricePerPlate< :limit") 
-	List<Catering> findbyfilter(@Param("limit") double lim);
+	
+	@Query("select c from Catering c where c.pricePerPlate< :pricebound and c.cultureId=:culture") 
+	List<Catering> findbyPriceAndCulture(double priceBound, int culture);
 
 }
