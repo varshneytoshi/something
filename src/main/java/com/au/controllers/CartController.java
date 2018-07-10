@@ -18,6 +18,7 @@ import com.au.entities.Orders;
 import com.au.entities.User;
 import com.au.repositories.CartRepository;
 import com.au.repositories.OrderRepository;
+import com.au.repositories.EventItemRepository;
 import com.au.repositories.UserRepository;
 
 @Controller
@@ -26,6 +27,8 @@ public class CartController {
 	UserRepository userRepo;
 	@Autowired
 	CartRepository cartRepo;
+	@Autowired
+	EventItemRepository eiRepo;
 	@Autowired
 	OrderRepository orderRepo;
 	
@@ -57,6 +60,21 @@ public class CartController {
 	}
 	
 	@CrossOrigin
+	@PostMapping("/setItem")
+	public ResponseEntity<Integer> setitem(@RequestBody HashMap<String, String> itemsObject) {
+		int userId=Integer.parseInt(itemsObject.get("userId"));
+		User user=getUser(userId);
+		int cartId=user.getCartId();
+		int itemId=Integer.parseInt(itemsObject.get("itemId"));
+		int eventId=Integer.parseInt(itemsObject.get("eventId"));
+		EventItemMapper eiMapper=new EventItemMapper();
+		eiMapper.setCartId(cartId);
+		eiMapper.setEventId(eventId);
+		eiMapper.setItemId(itemId);
+		eiRepo.save(eiMapper);	
+		return new ResponseEntity<Integer>(0,HttpStatus.OK);
+	}
+	@CrossOrigin
     @PostMapping("/deletecart")
     public ResponseEntity<Integer> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
     	if(cartRepo.getDelFlag(Integer.parseInt(map.get("cartid")))==1){
@@ -80,6 +98,5 @@ public class CartController {
     	orderRepo.save(order);
     	return new ResponseEntity<Integer>(1, HttpStatus.OK);
     }
-	
 	
 }
