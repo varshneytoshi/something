@@ -55,6 +55,17 @@ private static final long serialVersionUID = -2054386655979281969L;
 	@Column(name="WeddingDate")
 	private Date weddingDate;
 	
+	@Column(name="CartId")
+	private int cartId;
+	
+	public int getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
+
 	@OneToOne(fetch = FetchType.EAGER ,mappedBy="user")
 	@Cascade(value=org.hibernate.annotations.CascadeType.ALL)
 	private Cart cart;
