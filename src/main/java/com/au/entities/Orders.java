@@ -41,7 +41,7 @@ public class Orders implements Serializable{
 	private double totalPrice;
 	
 	@Column(name="DelFlag")
-	private char delFlag;
+	private int delFlag;
 
 	public int getOrderId() {
 		return orderId;
@@ -91,11 +91,11 @@ public class Orders implements Serializable{
 		this.totalPrice = totalPrice;
 	}
 
-	public char getDelFlag() {
+	public int getDelFlag() {
 		return delFlag;
 	}
 
-	public void setDelFlag(char delFlag) {
+	public void setDelFlag(int delFlag) {
 		this.delFlag = delFlag;
 	}
 

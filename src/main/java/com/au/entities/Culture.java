@@ -38,7 +38,7 @@ private int Culture_Modification_Id;
 private Date culture_Modification_Date;
 
 @Column(name="DelFlag")
-private boolean delFlag;
+private int delFlag;
 
 public int getCultureId() {
 	return cultureId;
@@ -88,11 +88,11 @@ public void setCulture_Modification_Date(Date culture_Modification_Date) {
 	this.culture_Modification_Date = culture_Modification_Date;
 }
 
-public boolean isDelFlag() {
+public int isDelFlag() {
 	return delFlag;
 }
 
-public void setDelFlag(boolean delFlag) {
+public void setDelFlag(int delFlag) {
 	this.delFlag = delFlag;
 }
 

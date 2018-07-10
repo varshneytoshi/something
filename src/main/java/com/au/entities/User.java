@@ -74,7 +74,7 @@ private static final long serialVersionUID = -2054386655979281969L;
 	private double noOfWeddingDays;
 
 	@Column(name="DelFlag")
-	private boolean delFlag;
+	private int delFlag;
 
 	
 //	@OneToMany(fetch = FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
@@ -105,11 +105,11 @@ private static final long serialVersionUID = -2054386655979281969L;
 		this.noOfWeddingDays = noOfWeddingDays;
 	}
 
-	public boolean isDelFlag() {
+	public int isDelFlag() {
 		return delFlag;
 	}
 
-	public void setDelFlag(boolean delFlag) {
+	public void setDelFlag(int delFlag) {
 		this.delFlag = delFlag;
 	}
 

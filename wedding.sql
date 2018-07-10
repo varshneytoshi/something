@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2018 at 07:31 AM
+-- Generation Time: Jul 10, 2018 at 11:45 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -32,7 +32,7 @@ CREATE TABLE `cart` (
   `cart_id` int(10) NOT NULL,
   `venue_id` int(10) NOT NULL,
   `menu_id` int(10) NOT NULL,
-  `del_flag` varchar(2) NOT NULL
+  `del_flag` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -40,7 +40,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `venue_id`, `menu_id`, `del_flag`) VALUES
-(1, 1, 1, 'f');
+(1, 1, 1, 0),
+(2, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -55,15 +56,15 @@ CREATE TABLE `catering` (
   `prive_per_plate` double DEFAULT NULL,
   `culture_id` int(11) NOT NULL,
   `package_type` int(2) DEFAULT NULL,
-  `d` varchar(2) DEFAULT NULL
+  `del_flag` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `catering`
 --
 
-INSERT INTO `catering` (`menu`, `package_name`, `menu_description`, `prive_per_plate`, `culture_id`, `package_type`, `d`) VALUES
-(1, 'veg dinner', NULL, 100, 1, 0, 'f');
+INSERT INTO `catering` (`menu`, `package_name`, `menu_description`, `prive_per_plate`, `culture_id`, `package_type`, `del_flag`) VALUES
+(1, 'veg dinner', NULL, 100, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -77,15 +78,16 @@ CREATE TABLE `culture` (
   `culture_creation_id` int(10) DEFAULT NULL,
   `culture_creation_date` date DEFAULT NULL,
   `culture_modification_id` int(10) DEFAULT NULL,
-  `culture_modification_date` date DEFAULT NULL
+  `culture_modification_date` date DEFAULT NULL,
+  `del_flag` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `culture`
 --
 
-INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`) VALUES
-(1, 'hindu', 1, '2018-07-02', 1, '2018-07-02');
+INSERT INTO `culture` (`culture_id`, `culture_name`, `culture_creation_id`, `culture_creation_date`, `culture_modification_id`, `culture_modification_date`, `del_flag`) VALUES
+(1, 'hindu', 1, '2018-07-02', 1, '2018-07-02', 0);
 
 -- --------------------------------------------------------
 
@@ -97,7 +99,7 @@ CREATE TABLE `events` (
   `event_id` int(11) NOT NULL,
   `event_name` varchar(30) DEFAULT NULL,
   `culture_id` int(11) NOT NULL,
-  `del_flag` varchar(2) DEFAULT NULL
+  `del_flag` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -105,7 +107,7 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`event_id`, `event_name`, `culture_id`, `del_flag`) VALUES
-(1, 'Mehendi', 1, 'f');
+(1, 'Mehendi', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -117,8 +119,17 @@ CREATE TABLE `event_item_mapper` (
   `ei_mapper_id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `del_flag` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `event_item_mapper`
+--
+
+INSERT INTO `event_item_mapper` (`ei_mapper_id`, `event_id`, `item_id`, `user_id`, `del_flag`) VALUES
+(1, 1, 1, 1, 0),
+(2, 1, 1, 2, 0);
 
 -- --------------------------------------------------------
 
@@ -133,7 +144,7 @@ CREATE TABLE `items` (
   `item_description` varchar(100) DEFAULT NULL,
   `item_price` double NOT NULL,
   `item_images` varchar(1000) DEFAULT NULL,
-  `del_flag` varchar(2) DEFAULT NULL
+  `del_flag` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -141,7 +152,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`item_id`, `item_name`, `item_type`, `item_description`, `item_price`, `item_images`, `del_flag`) VALUES
-(1, 'lamp', 'mehendi', 'light', 100, NULL, 'f');
+(1, 'lamp', 'mehendi', 'light', 100, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -155,7 +166,7 @@ CREATE TABLE `orders` (
   `venue_id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
   `total_price` double DEFAULT NULL,
-  `del_flag` varchar(2) DEFAULT NULL
+  `del_flag` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -163,7 +174,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `venue_id`, `menu_id`, `total_price`, `del_flag`) VALUES
-(1, 1, 1, 1, 110000, 'f');
+(1, 1, 1, 1, 110000, 0);
 
 -- --------------------------------------------------------
 
@@ -174,8 +185,16 @@ INSERT INTO `orders` (`order_id`, `user_id`, `venue_id`, `menu_id`, `total_price
 CREATE TABLE `order_item_mapper` (
   `oi_mapper_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL
+  `item_id` int(11) NOT NULL,
+  `del_flag` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_item_mapper`
+--
+
+INSERT INTO `order_item_mapper` (`oi_mapper_id`, `order_id`, `item_id`, `del_flag`) VALUES
+(1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -187,7 +206,7 @@ CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
   `usermail_id` varchar(255) DEFAULT NULL,
   `culture` int(11) DEFAULT NULL,
-  `del_flag` varchar(2) DEFAULT NULL,
+  `del_flag` int(1) DEFAULT NULL,
   `est_budget` double DEFAULT NULL,
   `no_of_guest` double DEFAULT NULL,
   `no_of_wedding_days` double DEFAULT NULL,
@@ -203,7 +222,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `usermail_id`, `culture`, `del_flag`, `est_budget`, `no_of_guest`, `no_of_wedding_days`, `user_contact`, `user_name`, `user_pass`, `wedding_date`, `cart_id`) VALUES
-(1, 'gayu@gmail', 1, 'f', 120000, 120, 2, '12134', 'gayu', '123', '2018-07-25', 1);
+(1, 'gayu@gmail', 1, 0, 120000, 120, 2, '12134', 'gayu', '123', '2018-07-25', 1),
+(2, 'toshi@gmail', 1, 0, 1200000, 1000, 2, '234143', 'toshi', '12345', '2018-07-26', 2);
 
 -- --------------------------------------------------------
 
@@ -218,7 +238,7 @@ CREATE TABLE `venue` (
   `venue_location` varchar(1000) DEFAULT NULL,
   `venue_price` double DEFAULT NULL,
   `venue_capacity` int(10) DEFAULT NULL,
-  `del_flag` varchar(2) DEFAULT NULL
+  `del_flag` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -226,7 +246,7 @@ CREATE TABLE `venue` (
 --
 
 INSERT INTO `venue` (`venue_id`, `venue_name`, `venue_type`, `venue_location`, `venue_price`, `venue_capacity`, `del_flag`) VALUES
-(1, 'goa hall', 'destination', 'goa', 100000, 1000, 'f');
+(1, 'goa hall', 'destination', 'goa', 100000, 1000, 0);
 
 --
 -- Indexes for dumped tables
@@ -323,7 +343,7 @@ ALTER TABLE `culture`
 -- AUTO_INCREMENT for table `event_item_mapper`
 --
 ALTER TABLE `event_item_mapper`
-  MODIFY `ei_mapper_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ei_mapper_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -341,13 +361,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
-  MODIFY `oi_mapper_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `oi_mapper_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `venue`
