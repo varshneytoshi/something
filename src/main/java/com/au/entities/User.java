@@ -50,7 +50,7 @@ private static final long serialVersionUID = -2054386655979281969L;
 	private double estBudget;
 	
 	@Column(name="NoOfGuest")
-	private double noOfGuest;
+	private int noOfGuest;
 
 	@Column(name="WeddingDate")
 	private Date weddingDate;
@@ -168,11 +168,11 @@ private static final long serialVersionUID = -2054386655979281969L;
 		this.estBudget = estBudget;
 	}
 
-	public double getNoOfGuest() {
+	public int getNoOfGuest() {
 		return noOfGuest;
 	}
 
-	public void setNoOfGuest(double noOfGuest) {
+	public void setNoOfGuest(int noOfGuest) {
 		this.noOfGuest = noOfGuest;
 	}
 
