@@ -65,10 +65,6 @@ private static final long serialVersionUID = -2054386655979281969L;
 	public void setCartId(int cartId) {
 		this.cartId = cartId;
 	}
-
-	@OneToOne(fetch = FetchType.EAGER ,mappedBy="user")
-	@Cascade(value=org.hibernate.annotations.CascadeType.ALL)
-	private Cart cart;
 	
 	@Column(name="Culture")
 	private int culture;
@@ -83,14 +79,6 @@ private static final long serialVersionUID = -2054386655979281969L;
 //	@OneToMany(fetch = FetchType.EAGER,cascade=javax.persistence.CascadeType.ALL)
 //	@JoinTable(name="cust_coupon" , joinColumns = { @JoinColumn(name="custId")},inverseJoinColumns= {@JoinColumn(name="couponId")})
 //	private Set<Coupon> coupons = new HashSet<Coupon>();
-	
-	public Cart getCart() {
-		return cart;
-	}
-
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
 
 	public int getCulture() {
 		return culture;
