@@ -168,7 +168,7 @@ INSERT INTO `items` (`item_id`, `item_name`, `item_type`, `item_description`, `i
 --
 
 CREATE TABLE `orders` (
-  `order_id` int(11) NOT NULL,
+  `order_id` varchar(30) NOT NULL,
   `user_id` int(11) NOT NULL,
   `venue_id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
@@ -181,18 +181,18 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `venue_id`, `menu_id`, `total_price`, `del_flag`) VALUES
-(1, 1, 1, 1, 110000, 1),
-(2, 2, 1, 1, 12000, 0),
-(3, 1, 1, 1, 10000, 0),
-(6, 1, 1, 1, 0, 0),
-(7, 1, 1, 1, 0, 0),
-(8, 1, 1, 1, 0, 0),
-(9, 1, 1, 1, 0, 0),
-(10, 1, 1, 1, 0, 0),
-(11, 1, 1, 1, 0, 0),
-(12, 1, 1, 1, 0, 0),
-(13, 1, 1, 1, 0, 0),
-(14, 1, 1, 1, 0, 0);
+('1', 1, 1, 1, 110000, 1),
+('2', 2, 1, 1, 12000, 0),
+('3', 1, 1, 1, 10000, 0),
+('6', 1, 1, 1, 0, 0),
+('7', 1, 1, 1, 0, 0),
+('8', 1, 1, 1, 0, 0),
+('9', 1, 1, 1, 0, 0),
+('10', 1, 1, 1, 0, 0),
+('11', 1, 1, 1, 0, 0),
+('12', 1, 1, 1, 0, 0),
+('13', 1, 1, 1, 0, 0),
+('14', 1, 1, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -202,7 +202,7 @@ INSERT INTO `orders` (`order_id`, `user_id`, `venue_id`, `menu_id`, `total_price
 
 CREATE TABLE `order_item_mapper` (
   `oi_mapper_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
+  `order_id` varchar(30) NOT NULL,
   `item_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `del_flag` int(1) DEFAULT NULL
@@ -369,7 +369,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `order_id` varchar(11) NOT NULL;
 
 --
 -- AUTO_INCREMENT for table `order_item_mapper`
