@@ -91,6 +91,15 @@ public class CateringController {
 		return estBudget * 0.4 / (noOfDays * guests);
 	}
 
+			@CrossOrigin
+			@PostMapping("/getCateringDetails")
+			public ResponseEntity<Catering> getCateringById(@RequestBody HashMap<String,String> menuMap)
+			{
+				Catering cat=cateringRepo.findById(Integer.parseInt(menuMap.get("menuId"))).get();
+				return new ResponseEntity<Catering>(cat,HttpStatus.OK);
+			}
+		
+			
 	@CrossOrigin
 	@PostMapping("/addCatering")
 	public ResponseEntity<Integer> addCatering(@RequestBody HashMap<String, String> credMap) throws Exception {

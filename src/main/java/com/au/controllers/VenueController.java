@@ -52,6 +52,7 @@ public class VenueController {
 								System.out.println("No venues have been added by this user");
 								throw new Exception();
 							}
+
 						} else {
 							System.out.println("no input fetched for location and no of guests");
 							throw new Exception();
@@ -77,6 +78,12 @@ public class VenueController {
 			System.out.println("Request object is null");
 			return new ResponseEntity<List<Venue>>(HttpStatus.BAD_REQUEST);
 		}
+	}
+	@CrossOrigin
+	@PostMapping("/getVenueDetails")
+	public ResponseEntity<Venue> getVenueById(@RequestBody HashMap<String,String> venueMap){
+		Venue venue=venueRepo.findById(Integer.parseInt(venueMap.get("venueId"))).get();
+		return new ResponseEntity<Venue>(venue,HttpStatus.OK);
 	}
 
 	private double calculateVenuePriceUpperBound(double estBudget, double noOfDays) {
