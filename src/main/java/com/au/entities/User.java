@@ -20,6 +20,23 @@ import org.hibernate.annotations.Cascade;
 @Entity
 @Table(name="user")
 public class User  implements Serializable {
+public User(int userId, String userName, String userPass, String usermailId, String userContact, double estBudget,
+			int noOfGuest, Date weddingDate, int cartId, int culture, double noOfWeddingDays, int delFlag) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPass = userPass;
+		UsermailId = usermailId;
+		this.userContact = userContact;
+		this.estBudget = estBudget;
+		this.noOfGuest = noOfGuest;
+		this.weddingDate = weddingDate;
+		this.cartId = cartId;
+		this.culture = culture;
+		this.noOfWeddingDays = noOfWeddingDays;
+		this.delFlag = delFlag;
+	}
+
 public static double totalPrice = 0;
 private static final long serialVersionUID = -2054386655979281969L;
 	

@@ -13,5 +13,5 @@ import com.au.entities.Orders;
 @Repository
 public interface EventRepository extends JpaRepository<Events, Integer>{
 	@Query("select e from Events e where e.cultureId = :cultureid and e.delFlag = 0")
-	List<Events> findOrderByCultureId(@Param("cultureid") Integer culid);
+	List<Events> findEventByCultureId(@Param("cultureid") Integer culid);
 }

@@ -22,7 +22,7 @@ public class Orders implements Serializable{
 	
 	@Id
 	@Column(name="OrderId", unique=true, nullable=false)
-	private int orderId;
+	private String orderId;
 
 	@Column(name="UserId")
 	private int userId;
@@ -45,11 +45,11 @@ public class Orders implements Serializable{
 	@Column(name="DelFlag")
 	private int delFlag;
 
-	public int getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
+	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 
