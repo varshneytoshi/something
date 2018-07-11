@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.au.entities.Cart;
 import com.au.entities.EventItemMapper;
 import com.au.entities.Items;
+import com.au.entities.Orders;
+import com.au.entities.User;
 @Repository
 public interface CartRepository extends JpaRepository<Cart,Integer> {
 	@Query("select c.delFlag from Cart c where c.cartId = :cartid")

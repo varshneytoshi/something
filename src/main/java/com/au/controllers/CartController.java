@@ -113,8 +113,19 @@ public class CartController {
 	
 	
 	@CrossOrigin
-    @PostMapping("/checkoutcart")
-    public ResponseEntity<Integer> checkoutCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
+    @PostMapping("/getcartbyuser")
+    public ResponseEntity<Cart> getCartByUser(@RequestBody HashMap<String,String> map) throws Exception{
+		User user = userRepo.findById(Integer.parseInt(map.get("userid"))).get();
+    	Cart cart = cartRepo.findById(user.getCartId()).get();
+    	if(cart.getDelFlag()==0)
+    		return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+    	else
+    		throw new Exception("cart doesnt exist");
+    }
+	
+	@CrossOrigin
+    @PostMapping("/deletecart")
+    public ResponseEntity<Integer> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
     	if(cartRepo.getDelFlag(Integer.parseInt(map.get("cartid")))==1){
             throw new Exception("cart doesn't exist");
         }

@@ -14,7 +14,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query("select u from User u where u.cartId = :cartid and u.delFlag = 0")
 	User findUserByCartId(@Param("cartid") Integer foo);
 	
-	
 	@Query("select u.delFlag from User u where u.userId = :userid")
 	Integer getDelFlag(@Param("userid") Integer uid);
 }
