@@ -18,8 +18,17 @@ public class OrderItemMapper {
 	@Column(name="ItemId")
 	private int itemId;
 	
-	@Column(name="UserId")
-	private int userId;
+	@Column(name="DelFlag")
+	private int delFlag;
+	
+	
+	public int getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(int delFlag) {
+		this.delFlag = delFlag;
+	}
 
 	public int getOiMapperId() {
 		return oiMapperId;
@@ -45,11 +54,5 @@ public class OrderItemMapper {
 		this.itemId = itemId;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+	
 }

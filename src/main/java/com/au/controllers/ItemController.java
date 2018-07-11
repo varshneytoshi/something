@@ -19,11 +19,11 @@ import com.au.repositories.ItemRepository;
 public class ItemController {
 	@Autowired
 	ItemRepository itemRepo;
-	
+	//update item type to int and write a function to get the items by cultureid
 	@CrossOrigin
 	@PostMapping("/getItems")
-	public ResponseEntity<List<Items>> getArticleById(@RequestBody HashMap<String,String> map) {
-			List<Items> items = itemRepo.findItemsByType(map.get("itemtype"),Double.parseDouble(map.get("itemprice")));
+	public ResponseEntity<List<Items>> getItemsByTypePrice(@RequestBody HashMap<String,String> map) {
+			List<Items> items = itemRepo.findItemsByType(map.get("itemtype"));
 			return new ResponseEntity<List<Items>>(items, HttpStatus.OK);
 	}
 }

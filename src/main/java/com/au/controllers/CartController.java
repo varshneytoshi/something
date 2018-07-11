@@ -63,7 +63,7 @@ public class CartController {
 		User user = getUser(Integer.parseInt(foodObject.get("userId")));
 		int cartid=user.getCartId();
 		Cart cart=cartRepo.findById(cartid).get();
-		cart.setVenueId(Integer.parseInt(foodObject.get("packageId")));
+		cart.setMenuId(Integer.parseInt(foodObject.get("packageId")));
 		cartRepo.save(cart);			
 		return new ResponseEntity<Integer>(0,HttpStatus.OK);
 	}

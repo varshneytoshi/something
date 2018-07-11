@@ -33,6 +33,7 @@ public class CultureController {
 		return new ResponseEntity<List<Culture>>(culture, HttpStatus.OK);
 	}
 	
+	
 	@CrossOrigin
 	@PostMapping("/setCulture")
 	public ResponseEntity<Integer> setCulture(@RequestBody HashMap<String,String> paramMap) {

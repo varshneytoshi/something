@@ -22,7 +22,7 @@ public class EventController {
 	
 	@CrossOrigin
 	@PostMapping("/getevents")
-	public ResponseEntity<List<Events>> getArticleById(@RequestBody HashMap<String,String> map) {
+	public ResponseEntity<List<Events>> getEventsById(@RequestBody HashMap<String,String> map) {
 			List<Events> events = eventRepo.findOrderByCultureId(Integer.parseInt(map.get("cultureid")));
 			return new ResponseEntity<List<Events>>(events, HttpStatus.OK);
 	}

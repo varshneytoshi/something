@@ -1,7 +1,10 @@
 package com.au.controllers;
 
 import java.io.Console;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -127,4 +130,34 @@ public class ApplicationController {
 //	                }).orElseThrow(() -> new Exception("User not found with id " + Integer.parseInt(map.get("userid"))));
 	    	return new ResponseEntity<Integer>(1, HttpStatus.OK);
 	    }
+
+
+		//estBudget,noofdays,noofguest,weddingdate
+		@CrossOrigin
+		@PostMapping("/addfilters")
+		public ResponseEntity<Integer> setFilters(@RequestBody HashMap<String,String> filterMap){
+			String expectedPattern = "yyyy-MM-dd";
+		    SimpleDateFormat formatter = new SimpleDateFormat(expectedPattern);
+		    Date date;
+		    try
+		    {  
+		    date = formatter.parse(filterMap.get("weddingDate"));
+		    System.out.println(date);
+		    }
+		    catch (ParseException e)
+		    {
+		      e.printStackTrace();
+		      return new ResponseEntity<Integer>(0,HttpStatus.BAD_REQUEST);
+		    }
+			double estBudget=Double.parseDouble(filterMap.get("estimatedBudget"));
+			double noOfDays=Double.parseDouble(filterMap.get("noOfDays"));
+			int userId=Integer.parseInt(filterMap.get("userId"));
+			User user=userRepo.findById(userId).get();
+			user.setEstBudget(estBudget);
+			user.setNoOfWeddingDays(noOfDays);
+			user.setWeddingDate(date);
+			userRepo.save(user);
+			return new ResponseEntity<Integer>(1,HttpStatus.OK);
+		}
+		
 }
