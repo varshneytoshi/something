@@ -46,7 +46,6 @@ public class CartController {
 		return userRepo.findById(userID).get();
 	}
 	
-	
 	@CrossOrigin
 	@PostMapping("/setVenue")
 	public ResponseEntity<Integer> setVenue(@RequestBody HashMap<String, String> venueObject) {
@@ -57,10 +56,6 @@ public class CartController {
 		cartRepo.save(cart);			
 		return new ResponseEntity<Integer>(0,HttpStatus.OK);
 	}
-	
-	
-	
-	
 	
 	@CrossOrigin
 	@PostMapping("/setfoodPackage")

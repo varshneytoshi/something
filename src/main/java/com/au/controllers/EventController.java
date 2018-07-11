@@ -19,11 +19,41 @@ import com.au.repositories.EventRepository;
 public class EventController {
 	@Autowired
 	EventRepository eventRepo;
-	
+
 	@CrossOrigin
 	@PostMapping("/getevents")
-	public ResponseEntity<List<Events>> getEventsById(@RequestBody HashMap<String,String> map) {
-			List<Events> events = eventRepo.findOrderByCultureId(Integer.parseInt(map.get("cultureid")));
-			return new ResponseEntity<List<Events>>(events, HttpStatus.OK);
+	public ResponseEntity<List<Events>> getEventsById(@RequestBody HashMap<String, String> map) throws Exception {
+		if (map != null) {
+			List<Events> events = null;
+			try {
+				if (map.containsKey("cultureid")) {
+					int eid = Integer.parseInt(map.get("cultureid"));
+					if (eid > 0) {
+						events = eventRepo.findEventByCultureId(eid);
+						if (events.size() > 0) {
+							System.out.println("fetched events based on culture from database");
+							return new ResponseEntity<List<Events>>(events, HttpStatus.OK);
+						} else {
+							System.out.println("Query returned null");
+							throw new Exception();
+						}
+					} else {
+						System.out.println("invalid culture id");
+						throw new Exception();
+					}
+				} else {
+					System.out.println("empty culture id");
+					throw new Exception();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<List<Events>>(HttpStatus.BAD_REQUEST);
+			}
+		}
+
+		else {
+			System.out.println("Request object is null");
+			return new ResponseEntity<List<Events>>(HttpStatus.BAD_REQUEST);
+		}
 	}
 }
