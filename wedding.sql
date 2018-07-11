@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 11, 2018 at 08:13 AM
+-- Generation Time: Jul 11, 2018 at 09:19 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 5.6.36
 
@@ -181,18 +181,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `venue_id`, `menu_id`, `total_price`, `del_flag`) VALUES
-('1', 1, 1, 1, 110000, 1),
-('2', 2, 1, 1, 12000, 0),
-('3', 1, 1, 1, 10000, 0),
-('6', 1, 1, 1, 0, 0),
-('7', 1, 1, 1, 0, 0),
-('8', 1, 1, 1, 0, 0),
-('9', 1, 1, 1, 0, 0),
-('10', 1, 1, 1, 0, 0),
-('11', 1, 1, 1, 0, 0),
-('12', 1, 1, 1, 0, 0),
-('13', 1, 1, 1, 0, 0),
-('14', 1, 1, 1, 0, 0);
+('1', 1, 1, 1, 10000, 0),
+('2', 1, 1, 1, 12000, 0);
 
 -- --------------------------------------------------------
 
@@ -204,7 +194,6 @@ CREATE TABLE `order_item_mapper` (
   `oi_mapper_id` int(11) NOT NULL,
   `order_id` varchar(30) NOT NULL,
   `item_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `del_flag` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -320,7 +309,6 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `order_item_mapper`
   ADD PRIMARY KEY (`oi_mapper_id`),
-  ADD KEY `user_id` (`user_id`),
   ADD KEY `item_id` (`item_id`),
   ADD KEY `order_id` (`order_id`);
 
@@ -364,12 +352,6 @@ ALTER TABLE `event_item_mapper`
 --
 ALTER TABLE `items`
   MODIFY `item_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `orders`
---
-ALTER TABLE `orders`
-  MODIFY `order_id` varchar(11) NOT NULL;
 
 --
 -- AUTO_INCREMENT for table `order_item_mapper`
@@ -426,7 +408,6 @@ ALTER TABLE `orders`
 -- Constraints for table `order_item_mapper`
 --
 ALTER TABLE `order_item_mapper`
-  ADD CONSTRAINT `order_item_mapper_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `order_item_mapper_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`item_id`),
   ADD CONSTRAINT `order_item_mapper_ibfk_3` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`);
 
