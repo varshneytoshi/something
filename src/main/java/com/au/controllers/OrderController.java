@@ -58,6 +58,7 @@ public class OrderController {
 		OrderItemMapper oiMapper=new OrderItemMapper();
 		oiMapper.setOrderId(orderId);
 		oiMapper.setItemId(itemId);
+		oiMapper.setDelFlag(0);
 		oiRepo.save(oiMapper);	
 		return new ResponseEntity<Integer>(0,HttpStatus.OK);
 	}

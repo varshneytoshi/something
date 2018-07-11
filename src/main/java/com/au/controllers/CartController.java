@@ -63,7 +63,7 @@ public class CartController {
 		User user = getUser(Integer.parseInt(foodObject.get("userId")));
 		int cartid=user.getCartId();
 		Cart cart=cartRepo.findById(cartid).get();
-		cart.setVenueId(Integer.parseInt(foodObject.get("packageId")));
+		cart.setMenuId(Integer.parseInt(foodObject.get("packageId")));
 		cartRepo.save(cart);			
 		return new ResponseEntity<Integer>(0,HttpStatus.OK);
 	}
@@ -97,8 +97,8 @@ public class CartController {
 	}
 	
 	@CrossOrigin
-    @PostMapping("/deletecart")
-    public ResponseEntity<Integer> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
+    @PostMapping("/checkoutcart")
+    public ResponseEntity<Integer> checkoutCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
     	if(cartRepo.getDelFlag(Integer.parseInt(map.get("cartid")))==1){
             throw new Exception("cart doesn't exist");
         }
@@ -125,8 +125,7 @@ public class CartController {
     	for(Integer itemid : itemids) {
     		oimapper.setItemId(itemid);
     		oimapper.setOrderId(order.getOrderId());
-    		oimapper.setUserId(user.getUserId());
-        	oiRepo.save(oimapper);
+    		oiRepo.save(oimapper);
         	oiRepo.flush();
     	}
     	return new ResponseEntity<Integer>(1, HttpStatus.OK);
