@@ -31,7 +31,7 @@ public class OrderController {
 	
 	@CrossOrigin
 	@PostMapping("/getOrders")
-	public ResponseEntity<List<Orders>> getArticleById(@RequestBody HashMap<String,String> map) {
+	public ResponseEntity<List<Orders>> getOrderByUserId(@RequestBody HashMap<String,String> map) {
 			List<Orders> orders = orderRepo.findOrderByUserId(Integer.parseInt(map.get("userid")));
 			return new ResponseEntity<List<Orders>>(orders, HttpStatus.OK);
 	}
@@ -39,7 +39,7 @@ public class OrderController {
 	@CrossOrigin
     @PostMapping("/deleteorder")
     public ResponseEntity<Integer> deleteOrder(@RequestBody HashMap<String,String> map) throws Exception{
-    	if(orderRepo.getDelFlag(Integer.parseInt(map.get("orderid")))==1){
+    	if(orderRepo.getDelFlag(map.get("orderid"))==1){
             throw new Exception("order doesn't exist");
         }
     	Orders order = orderRepo.findById(Integer.parseInt(map.get("orderid"))).get();
@@ -48,20 +48,6 @@ public class OrderController {
     	return new ResponseEntity<Integer>(1, HttpStatus.OK);
     }
 	
-	@CrossOrigin
-	@PostMapping("/setOrderItem")
-	public ResponseEntity<Integer> setorderitem(@RequestBody HashMap<String, String> itemsObject) {
-		int orderId=Integer.parseInt(itemsObject.get("orderId"));
-		Orders order = orderRepo.findById(orderId).get();
-		int itemId=Integer.parseInt(itemsObject.get("itemId"));
-		int eventId=Integer.parseInt(itemsObject.get("eventId"));
-		OrderItemMapper oiMapper=new OrderItemMapper();
-		oiMapper.setOrderId(orderId);
-		oiMapper.setItemId(itemId);
-		oiMapper.setDelFlag(0);
-		oiRepo.save(oiMapper);	
-		return new ResponseEntity<Integer>(0,HttpStatus.OK);
-	}
 	
 //	@CrossOrigin
 //	@PostMapping("/addToOrderItem")
