@@ -95,7 +95,7 @@ public class ApplicationController {
 		}
 	
 		@CrossOrigin
-	    @PostMapping("/cart")
+	    @PostMapping("/getuserbycart")
 	    public ResponseEntity<User> getUserByCart(@RequestBody HashMap<String,String> map) {
 	    	User user = userRepo.findUserByCartId(Integer.parseInt(map.get("cartid")));
 	    	return new ResponseEntity<User>(user, HttpStatus.OK);

@@ -97,6 +97,17 @@ public class CartController {
 	}
 	
 	@CrossOrigin
+    @PostMapping("/getcartbyuser")
+    public ResponseEntity<Cart> getCartByUser(@RequestBody HashMap<String,String> map) throws Exception{
+		User user = userRepo.findById(Integer.parseInt(map.get("userid"))).get();
+    	Cart cart = cartRepo.findById(user.getCartId()).get();
+    	if(cart.getDelFlag()==0)
+    		return new ResponseEntity<Cart>(cart, HttpStatus.OK);
+    	else
+    		throw new Exception("cart doesnt exist");
+    }
+	
+	@CrossOrigin
     @PostMapping("/deletecart")
     public ResponseEntity<Integer> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
     	if(cartRepo.getDelFlag(Integer.parseInt(map.get("cartid")))==1){
@@ -118,17 +129,18 @@ public class CartController {
 //    	order.setItemsPurchased(items);
     	orderRepo.save(order);
     	orderRepo.flush();
-    	System.out.println("skhagdkhsaghkdghksagdhkgahskgdkhgaskgdhkasghkdghkasgdhkgha");
-    	System.out.println(order.getOrderId());
-    	OrderItemMapper oimapper = new OrderItemMapper();
-    	List<Integer> itemids = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
-    	for(Integer itemid : itemids) {
-    		oimapper.setItemId(itemid);
-    		oimapper.setOrderId(order.getOrderId());
-    		oimapper.setUserId(user.getUserId());
-        	oiRepo.save(oimapper);
-        	oiRepo.flush();
-    	}
+//    	Orders order1 = orderRepo.getOrderByUserId(user.getUserId()).get();
+//    	System.out.println("skhagdkhsaghkdghksagdhkgahskgdkhgaskgdhkasghkdghkasgdhkgha");
+//    	System.out.println(order.getOrderId());
+//    	OrderItemMapper oimapper = new OrderItemMapper();
+//    	List<Integer> itemids = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
+//    	for(Integer itemid : itemids) {
+//    		oimapper.setItemId(itemid);
+//    		oimapper.setOrderId(order1.getOrderId());
+//    		oimapper.setUserId(order1.getUserId());
+//        	oiRepo.save(oimapper);
+//        	oiRepo.flush();
+//    	}
     	return new ResponseEntity<Integer>(1, HttpStatus.OK);
     }
 	

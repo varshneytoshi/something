@@ -13,7 +13,7 @@ public class OrderItemMapper {
 	private int oiMapperId;
 
 	@Column(name="OrderId")
-	private int orderId;
+	private String orderId;
 	
 	@Column(name="ItemId")
 	private int itemId;
@@ -29,12 +29,12 @@ public class OrderItemMapper {
 		this.oiMapperId = oiMapperId;
 	}
 
-	public int getOrderId() {
+	public String getOrderId() {
 		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setOrderId(String orderId2) {
+		this.orderId = orderId2;
 	}
 
 	public int getItemId() {
