@@ -14,13 +14,8 @@ public interface OrderRepository extends JpaRepository<Orders, Integer>{
 	@Query("select o from Orders o where o.userId = :userid and o.delFlag = 0")
 	List<Orders> findOrderByUserId(@Param("userid") Integer uid);
 	
-<<<<<<< HEAD
-	@Query("select o.delFlag from Orders o where o.orderId = :orderid")
-	Integer getDelFlag(@Param("orderid") String oid);
-=======
 	@Query("select o from Orders o where o.orderId = :orderid")
 	Orders getOrders(@Param("orderid") String oid);
->>>>>>> 9e13b2afe210c8c8bb153e929e15b28cfa0938de
 	
 //	@Query("select o from Orders o where o.userId = :userid order by orderId desc limit 1")
 //	Optional<Orders> getOrderByUserId(@Param("orderid") Integer uid);
