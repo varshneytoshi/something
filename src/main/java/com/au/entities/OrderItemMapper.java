@@ -2,14 +2,19 @@ package com.au.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GeneratorType;
 
 @Entity
 @Table(name="order_item_mapper")
 public class OrderItemMapper {
 	@Id
 	@Column(name="OiMapperId", unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oiMapperId;
 
 	@Column(name="OrderId")
@@ -32,6 +37,18 @@ public class OrderItemMapper {
 	@Column(name="DelFlag")
 	private int delFlag;
 	
+	@Column(name="EventId")
+	private int eventId;
+	
+	
+	public int getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
+	}
+
 	public int getDelFlag() {
 		return delFlag;
 	}
@@ -52,8 +69,8 @@ public class OrderItemMapper {
 		return orderId;
 	}
 
-	public void setOrderId(String orderId2) {
-		this.orderId = orderId2;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	public int getItemId() {

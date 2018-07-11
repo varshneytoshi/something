@@ -1,6 +1,7 @@
 package com.au.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -57,6 +58,10 @@ public class CartController {
 		return new ResponseEntity<Integer>(0,HttpStatus.OK);
 	}
 	
+	
+	
+	
+	
 	@CrossOrigin
 	@PostMapping("/setfoodPackage")
 	public ResponseEntity<Integer> setMenu(@RequestBody HashMap<String, String> foodObject) {
@@ -87,14 +92,25 @@ public class CartController {
 	@CrossOrigin
 	@PostMapping("/getitemsincart")
 	public ResponseEntity<List<Items>> getItemsInCart(@RequestBody HashMap<String,String> map, Model model){
-		List<Integer> itemids = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
+		List<EventItemMapper> eventItems = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
 		List<Items> items = new ArrayList<>();
-		for(Integer itemid : itemids)
+		for(EventItemMapper itemid : eventItems)
 		{	
-			items.add(itemRepo.findById(itemid).get());
+			items.add(itemRepo.findById(itemid.getItemId()).get());
 		}
 		return new ResponseEntity<List<Items>>(items, HttpStatus.OK); 
 	}
+	
+	private int setItemInOiMapper(String orderId,int itemId,int eventId) {
+		
+		OrderItemMapper oimapper = new OrderItemMapper();
+		oimapper.setItemId(itemId);
+		oimapper.setOrderId(orderId);
+		oimapper.setEventId(eventId);
+		oiRepo.save(oimapper);	
+		return 1;
+	}
+	
 	
 	@CrossOrigin
     @PostMapping("/getcartbyuser")
@@ -118,8 +134,12 @@ public class CartController {
 //    	cart.setVenueId(0);
 //    	cart.setMenuId(0);
     	cartRepo.save(cart);
-    	
+    	Date date=new Date();
+    	String orderId=date.getTime()+"//"+cart.getCartId();
+    	orderId=orderId.substring(7);
+    	System.out.println(orderId);
     	Orders order = new Orders();
+    	order.setOrderId(orderId);
     	order.setMenuId(cart.getMenuId());
     	order.setVenueId(cart.getVenueId());
     	order.setTotalPrice(User.totalPrice);//to be calculated
@@ -128,19 +148,12 @@ public class CartController {
     	order.setDelFlag(0);
 //    	order.setItemsPurchased(items);
     	orderRepo.save(order);
-    	orderRepo.flush();
-//    	Orders order1 = orderRepo.getOrderByUserId(user.getUserId()).get();
-//    	System.out.println("skhagdkhsaghkdghksagdhkgahskgdkhgaskgdhkasghkdghkasgdhkgha");
-//    	System.out.println(order.getOrderId());
-//    	OrderItemMapper oimapper = new OrderItemMapper();
-//    	List<Integer> itemids = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
-//    	for(Integer itemid : itemids) {
-//    		oimapper.setItemId(itemid);
-//    		oimapper.setOrderId(order1.getOrderId());
-//    		oimapper.setUserId(order1.getUserId());
-//        	oiRepo.save(oimapper);
-//        	oiRepo.flush();
-//    	}
+    	//todo: add delete items from cart);
+    	List<EventItemMapper> items = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
+    	for(EventItemMapper item : items) {
+    		setItemInOiMapper(orderId, item.getItemId(),item.getEventId() );
+    		eiRepo.deleteById(item.getEiMapperId());
+    	}
     	return new ResponseEntity<Integer>(1, HttpStatus.OK);
     }
 	

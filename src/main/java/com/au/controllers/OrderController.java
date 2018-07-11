@@ -31,7 +31,7 @@ public class OrderController {
 	
 	@CrossOrigin
 	@PostMapping("/getOrders")
-	public ResponseEntity<List<Orders>> getArticleById(@RequestBody HashMap<String,String> map) {
+	public ResponseEntity<List<Orders>> getOrderByUserId(@RequestBody HashMap<String,String> map) {
 			List<Orders> orders = orderRepo.findOrderByUserId(Integer.parseInt(map.get("userid")));
 			return new ResponseEntity<List<Orders>>(orders, HttpStatus.OK);
 	}
@@ -39,7 +39,6 @@ public class OrderController {
 	@CrossOrigin
     @PostMapping("/deleteorder")
     public ResponseEntity<Integer> deleteOrder(@RequestBody HashMap<String,String> map) throws Exception{
-    	
     	Orders order = orderRepo.getOrders(map.get("orderid"));
     	if(order.getDelFlag()==1){
             throw new Exception("order doesn't exist");
