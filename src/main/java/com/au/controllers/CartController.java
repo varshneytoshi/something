@@ -124,7 +124,7 @@ public class CartController {
     }
 	
 	@CrossOrigin
-    @PostMapping("/deletecart")
+    @PostMapping("/checkoutcart")
     public ResponseEntity<Integer> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
     	if(cartRepo.getDelFlag(Integer.parseInt(map.get("cartid")))==1){
             throw new Exception("cart doesn't exist");
