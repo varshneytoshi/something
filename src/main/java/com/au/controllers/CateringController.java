@@ -49,7 +49,13 @@ import com.au.repositories.UserRepository;
 				return estBudget*0.4/(noOfDays*guests);	
 			}
 				
-			
+			@CrossOrigin
+			@PostMapping("/getCateringDetails")
+			public ResponseEntity<Catering> getCateringById(@RequestBody HashMap<String,String> menuMap)
+			{
+				Catering cat=cateringRepo.findById(Integer.parseInt(menuMap.get("menuId"))).get();
+				return new ResponseEntity<Catering>(cat,HttpStatus.OK);
+			}
 		
 			
 			@CrossOrigin

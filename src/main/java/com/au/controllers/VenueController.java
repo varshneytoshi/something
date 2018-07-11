@@ -36,6 +36,12 @@ public class VenueController {
 		List<Venue> venues=venueRepo.findbyPriceAndLocation(priceBound, location, noOfGuests);
 		return new ResponseEntity<List<Venue>>(venues, HttpStatus.OK);
 	}
+	@CrossOrigin
+	@PostMapping("/getVenueDetails")
+	public ResponseEntity<Venue> getVenueById(@RequestBody HashMap<String,String> venueMap){
+		Venue venue=venueRepo.findById(Integer.parseInt(venueMap.get("venueId"))).get();
+		return new ResponseEntity<Venue>(venue,HttpStatus.OK);
+	}
 	
 	private double calculateVenuePriceUpperBound(double estBudget,double noOfDays) {
 		return estBudget*0.4/noOfDays;
