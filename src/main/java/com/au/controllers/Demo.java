@@ -36,7 +36,7 @@ public class Demo {
 
         };
     }*/
-    @Bean
+    @Bean(name = "restTemplate")
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }

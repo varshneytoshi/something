@@ -38,6 +38,7 @@ public class VenueController {
 						User user = userRepo.findById(uid).get();
 						if (user != null) {
 							System.out.println("Fetched user object from database");
+							System.out.println(user.getUserName());
 							double priceBound = calculateVenuePriceUpperBound(user.getEstBudget(),
 									user.getNoOfWeddingDays());
 							String location = filters.get("venueLocation");
