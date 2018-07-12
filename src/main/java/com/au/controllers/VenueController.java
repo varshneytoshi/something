@@ -42,7 +42,7 @@ public class VenueController {
 							double priceBound = calculateVenuePriceUpperBound(user.getEstBudget(),
 									user.getNoOfWeddingDays());
 							String location = filters.get("location");
-							int noOfGuests = Integer.parseInt(filters.get("noOfGuests"));
+							int noOfGuests = user.getNoOfGuest();
 							if (location != null && noOfGuests > 0) {
 								System.out.println("Got user input for location and no of guests");
 								venues = venueRepo.findbyPriceAndLocation(priceBound, location, noOfGuests);

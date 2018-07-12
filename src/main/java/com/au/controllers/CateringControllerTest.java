@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.au.entities.Catering;
 import com.au.entities.Culture;
 import com.au.entities.Events;
 
@@ -32,10 +33,10 @@ public class CateringControllerTest {
 	}
 
 	@Test
-	public void checkGetAllCulture() {
-		ResponseEntity<Culture[]> responseEntity = restTemplate.getForEntity("/getAllCulture", Culture[].class);
-		Culture[] cultures = responseEntity.getBody();
-		System.out.println(cultures);
+	public void checkGetAllCatering() {
+		ResponseEntity<Catering[]> responseEntity = restTemplate.getForEntity("/getAllCatering", Catering[].class);
+		Catering[] catering = responseEntity.getBody();
+		System.out.println(catering);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 	

@@ -34,10 +34,10 @@ public class VenueControllerTest {
 	@Test
 	public void checkGetVenues() {
 		Map<String,Object> map = new HashMap<>();
-		map.put("userId", 1);
-		map.put("price", 100000);
+		map.put("userId", "1");
+		map.put("price", "1200000");
 		map.put("location", "goa");
-		map.put("noOfGuests", 950);
+
 		ResponseEntity<Venue[]> responseEntity = restTemplate.postForEntity("/getVenues", map, Venue[].class);
 		Venue[] venues = responseEntity.getBody();
 		System.out.println(venues);

@@ -25,11 +25,6 @@ public class EventControllerTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
-	@org.junit.Before
-	public void start() {
-		System.out.println("Before test cases");
-	}
-
 	@Test
 	public void checkGetEvents() {
 		Map<String,Integer> map = new HashMap<>();
