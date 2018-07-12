@@ -38,7 +38,7 @@ public class ApplicationController {
 		model.addAttribute("user", new User());
 		return "addNewUser";
 	}
-
+	@CrossOrigin
 	@PostMapping("/addNewUser")
 	public ResponseEntity<Integer> saveUser(@RequestBody HashMap<String, String> userDetails) {
 
