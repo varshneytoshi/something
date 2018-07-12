@@ -84,14 +84,6 @@ public int getDelFlag() {
 	@Column(name="CartId")
 	private int cartId;
 	
-	public int getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
-	
 	@Column(name="Culture")
 	private int culture;
 
@@ -106,6 +98,13 @@ public int getDelFlag() {
 //	@JoinTable(name="cust_coupon" , joinColumns = { @JoinColumn(name="custId")},inverseJoinColumns= {@JoinColumn(name="couponId")})
 //	private Set<Coupon> coupons = new HashSet<Coupon>();
 
+	public int getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
 	public int getCulture() {
 		return culture;
 	}
