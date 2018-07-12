@@ -57,12 +57,24 @@ public class ItemController {
 			return new ResponseEntity<List<Items>>(HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@CrossOrigin
 	@GetMapping("/getAllItems")
 	public ResponseEntity<List<Items>> getItems() {
-			List<Items> items = itemRepo.findAll();
-			return new ResponseEntity<List<Items>>(items, HttpStatus.OK);
+		List<Items> items = null;
+		try {
+			items = itemRepo.findAll();
+			if (items.size() > 0) {
+				System.out.println("Fetched items from database");
+				return new ResponseEntity<List<Items>>(items, HttpStatus.OK);
+			} else {
+				System.out.println("Query returned null");
+				return new ResponseEntity<List<Items>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<Items>>(HttpStatus.BAD_REQUEST);
+		}
 	}
-	
+
 }

@@ -32,41 +32,40 @@ public class VenueController {
 		if (filters != null) {
 			List<Venue> venues = null;
 			try {
-				if(filters.containsKey("userId")) {
-				int uid = Integer.parseInt(filters.get("userId"));
-				if (uid > 0) {
-					User user = userRepo.findById(uid).get();
-					if (user != null) {
-						System.out.println("Fetched user object from database");
-						double priceBound = calculateVenuePriceUpperBound(user.getEstBudget(),
-								user.getNoOfWeddingDays());
-						String location = filters.get("Location");
-						int noOfGuests = user.getNoOfGuest();
-						if (location != null && noOfGuests > 0) {
-							System.out.println("Got user input for location and no of guests");
-							venues = venueRepo.findbyPriceAndLocation(priceBound, location, noOfGuests);
-							if (venues.size() > 0) {
-								System.out.println("Returning list of venues");
-								return new ResponseEntity<List<Venue>>(venues, HttpStatus.OK);
+				if (filters.containsKey("userId")) {
+					int uid = Integer.parseInt(filters.get("userId"));
+					if (uid > 0) {
+						User user = userRepo.findById(uid).get();
+						if (user != null) {
+							System.out.println("Fetched user object from database");
+							double priceBound = calculateVenuePriceUpperBound(user.getEstBudget(),
+									user.getNoOfWeddingDays());
+							String location = filters.get("Location");
+							int noOfGuests = user.getNoOfGuest();
+							if (location != null && noOfGuests > 0) {
+								System.out.println("Got user input for location and no of guests");
+								venues = venueRepo.findbyPriceAndLocation(priceBound, location, noOfGuests);
+								if (venues.size() > 0) {
+									System.out.println("Returning list of venues");
+									return new ResponseEntity<List<Venue>>(venues, HttpStatus.OK);
+								} else {
+									System.out.println("No venues have been added by this user");
+									throw new Exception();
+								}
+
 							} else {
-								System.out.println("No venues have been added by this user");
+								System.out.println("no input fetched for location and no of guests");
 								throw new Exception();
 							}
-
 						} else {
-							System.out.println("no input fetched for location and no of guests");
-							throw new Exception();
+							System.out.println("Query returned null");
+							return new ResponseEntity<List<Venue>>(HttpStatus.INTERNAL_SERVER_ERROR);
 						}
 					} else {
-						System.out.println("Query returned null");
-						return new ResponseEntity<List<Venue>>(HttpStatus.INTERNAL_SERVER_ERROR);
+						System.out.println("invalid user id");
+						throw new Exception();
 					}
 				} else {
-					System.out.println("invalid user id");
-					throw new Exception();
-				}
-				}
-				else {
 					System.out.println("empty user id");
 					throw new Exception();
 				}
@@ -79,11 +78,39 @@ public class VenueController {
 			return new ResponseEntity<List<Venue>>(HttpStatus.BAD_REQUEST);
 		}
 	}
+
 	@CrossOrigin
 	@PostMapping("/getVenueDetails")
-	public ResponseEntity<Venue> getVenueById(@RequestBody HashMap<String,String> venueMap){
-		Venue venue=venueRepo.findById(Integer.parseInt(venueMap.get("venueId"))).get();
-		return new ResponseEntity<Venue>(venue,HttpStatus.OK);
+	public ResponseEntity<Venue> getVenueById(@RequestBody HashMap<String, String> venueMap) {
+		if (venueMap != null) {
+			try {
+				if (venueMap.containsKey("venueId")) {
+					int vid = Integer.parseInt(venueMap.get("venueId"));
+					if (vid > 0) {
+						Venue venue = venueRepo.findById(vid).get();
+						if (venue != null) {
+							System.out.println("Fetched venue object from database");
+							return new ResponseEntity<Venue>(venue, HttpStatus.OK);
+						} else {
+							System.out.println("query returned null");
+							return new ResponseEntity<Venue>(HttpStatus.INTERNAL_SERVER_ERROR);
+						}
+					} else {
+						System.out.println("invalid venue id");
+						throw new Exception();
+					}
+				} else {
+					System.out.println("empty venue id");
+					throw new Exception();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<Venue>(HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			System.out.println("Request object is null");
+			return new ResponseEntity<Venue>(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	private double calculateVenuePriceUpperBound(double estBudget, double noOfDays) {
