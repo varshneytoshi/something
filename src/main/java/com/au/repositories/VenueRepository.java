@@ -12,6 +12,4 @@ import com.au.entities.Venue;
 public interface VenueRepository extends JpaRepository<Venue, Integer> {
 	@Query("select v from Venue v where v.venueLocation=:location and v.venuePrice<=:price and v.venueCapacity>=:noOfGuests")
 	List<Venue> findbyPriceAndLocation(@Param("price") double priceBound,@Param("location") String location,@Param("noOfGuests") int noOfGuests);
-	
-
 }

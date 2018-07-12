@@ -71,18 +71,23 @@ public class OrderController {
 			try {
 				if (map.containsKey("orderid")) {
 					Orders order = orderRepo.getOrders(map.get("orderid"));
-					if (order != null || order.getDelFlag()==1) {
-						System.out.println("Fetched orders object from database");
-						order.setDelFlag(1);
-						orderRepo.save(order);
-						System.out.println("Orders object deleted from database");
-						return new ResponseEntity<Integer>(1, HttpStatus.OK);
+					if (order != null) {
+						if (order.getDelFlag() == 0) {
+							System.out.println("Fetched orders object from database");
+							order.setDelFlag(1);
+							orderRepo.save(order);
+							System.out.println("Orders object deleted from database");
+							return new ResponseEntity<Integer>(1, HttpStatus.OK);
+						}
+						else {
+							System.out.println("Query returned null");
+							return new ResponseEntity<Integer>(-2, HttpStatus.INTERNAL_SERVER_ERROR);
+						}
 					} else {
 						System.out.println("Query returned null");
 						return new ResponseEntity<Integer>(-2, HttpStatus.INTERNAL_SERVER_ERROR);
 					}
-				}
-				else {
+				} else {
 					System.out.println("Empty order id");
 					throw new Exception();
 				}

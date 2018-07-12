@@ -16,12 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.au.entities.Events;
+import com.au.entities.Venue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-public class EventControllerTest {
+public class VenueControllerTest {
 	@Autowired
-	EventController eventController;
+	VenueController venueController;
 	@Autowired
 	private TestRestTemplate restTemplate;
 
@@ -31,12 +32,25 @@ public class EventControllerTest {
 	}
 
 	@Test
-	public void checkGetEvents() {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("cultureid", 1);
-		ResponseEntity<Events[]> responseEntity = restTemplate.postForEntity("/getevents", map, Events[].class);
-		Events[] events = responseEntity.getBody();
-		System.out.println(events);
+	public void checkGetVenues() {
+		Map<String,Object> map = new HashMap<>();
+		map.put("userId", 1);
+		map.put("price", 100000);
+		map.put("location", "goa");
+		map.put("noOfGuests", 950);
+		ResponseEntity<Venue[]> responseEntity = restTemplate.postForEntity("/getVenues", map, Venue[].class);
+		Venue[] venues = responseEntity.getBody();
+		System.out.println(venues);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void checkGetVenueDetails() {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("venueId", 1);
+		ResponseEntity<Venue> responseEntity = restTemplate.postForEntity("/getVenueDetails", map, Venue.class);
+		Venue venue = responseEntity.getBody();
+		System.out.println(venue);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 }

@@ -15,13 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.au.entities.Culture;
 import com.au.entities.Events;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-public class EventControllerTest {
+public class CateringControllerTest {
 	@Autowired
-	EventController eventController;
+	CultureController cultureController;
 	@Autowired
 	private TestRestTemplate restTemplate;
 
@@ -31,12 +32,21 @@ public class EventControllerTest {
 	}
 
 	@Test
-	public void checkGetEvents() {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("cultureid", 1);
-		ResponseEntity<Events[]> responseEntity = restTemplate.postForEntity("/getevents", map, Events[].class);
-		Events[] events = responseEntity.getBody();
-		System.out.println(events);
+	public void checkGetAllCulture() {
+		ResponseEntity<Culture[]> responseEntity = restTemplate.getForEntity("/getAllCulture", Culture[].class);
+		Culture[] cultures = responseEntity.getBody();
+		System.out.println(cultures);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void checkSetCulture() {
+		Map<String, Integer> map = new HashMap<>();
+		map.put("userId", 1);
+		map.put("cultureId", 2);
+		ResponseEntity<Integer> responseEntity = restTemplate.postForEntity("/setCulture", map, Integer.class);
+		int result = responseEntity.getBody();
+		System.out.println(result);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 }
