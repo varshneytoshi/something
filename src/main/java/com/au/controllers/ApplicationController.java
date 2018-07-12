@@ -33,6 +33,7 @@ public class ApplicationController {
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 			Pattern.CASE_INSENSITIVE);
 
+	@CrossOrigin
 	@GetMapping("/addNewUser")
 	public String userForm(Model model) {
 		model.addAttribute("user", new User());
@@ -187,6 +188,7 @@ public class ApplicationController {
 		}
 	}
 
+	@CrossOrigin
 	@GetMapping("/getUsers")
 	public ResponseEntity<List<User>> getAllUsers() {
 		List<User> users = userRepo.findAll();
