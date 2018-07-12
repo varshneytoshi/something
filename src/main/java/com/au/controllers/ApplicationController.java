@@ -53,6 +53,7 @@ public class ApplicationController {
 		return "addNewUser";
 	}
 
+	@CrossOrigin
 	@PostMapping("/addNewUser")
 	public ResponseEntity<Integer> saveUser(@RequestBody HashMap<String, String> userDetails) {
 
@@ -351,8 +352,8 @@ public class ApplicationController {
 								throw new Exception();
 							}
 
-							if (filterMap.containsKey("estimatedBudget")) {
-								estBudget = Double.parseDouble(filterMap.get("estimatedBudget"));
+							if (filterMap.containsKey("estBudget")) {
+								estBudget = Double.parseDouble(filterMap.get("estBudget"));
 								if (estBudget > 0) {
 									user.setEstBudget(estBudget);
 								} else {

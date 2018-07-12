@@ -40,7 +40,7 @@ public class VenueController {
 							System.out.println("Fetched user object from database");
 							double priceBound = calculateVenuePriceUpperBound(user.getEstBudget(),
 									user.getNoOfWeddingDays());
-							String location = filters.get("Location");
+							String location = filters.get("venueLocation");
 							int noOfGuests = user.getNoOfGuest();
 							if (location != null && noOfGuests > 0) {
 								System.out.println("Got user input for location and no of guests");

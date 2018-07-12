@@ -18,7 +18,9 @@ import com.au.entities.Cart;
 
 
 import com.au.entities.Catering;
+import com.au.entities.EventItemDetails;
 import com.au.entities.EventItemMapper;
+import com.au.entities.Events;
 import com.au.entities.Items;
 import com.au.entities.OrderItemMapper;
 import com.au.entities.Orders;
@@ -28,6 +30,7 @@ import com.au.repositories.CartRepository;
 import com.au.repositories.CateringRepository;
 import com.au.repositories.OrderRepository;
 import com.au.repositories.EventItemRepository;
+import com.au.repositories.EventRepository;
 import com.au.repositories.ItemRepository;
 import com.au.repositories.OrderItemRepository;
 import com.au.repositories.UserRepository;
@@ -51,7 +54,8 @@ public class CartController {
 	VenueRepository venueRepo;
 	@Autowired
 	CateringRepository catRepo;
-	
+	@Autowired
+	EventRepository eventRepo;
 	private User getUser(int userID) {
 		return userRepo.findById(userID).get();
 	}
@@ -68,12 +72,12 @@ public class CartController {
 	}
 	
 	@CrossOrigin
-	@PostMapping("/setfoodPackage")
+	@PostMapping("/setFoodPackage")
 	public ResponseEntity<Integer> setMenu(@RequestBody HashMap<String, String> foodObject) {
 		User user = getUser(Integer.parseInt(foodObject.get("userId")));
 		String cartid=user.getCartId();
 		Cart cart=cartRepo.findById(cartid).get();
-		cart.setMenuId(Integer.parseInt(foodObject.get("packageId")));
+		cart.setMenuId(Integer.parseInt(foodObject.get("menuId")));
 		cartRepo.save(cart);			
 		return new ResponseEntity<Integer>(0,HttpStatus.OK);
 	}
@@ -86,6 +90,9 @@ public class CartController {
 		String cartId=user.getCartId();
 		int itemId=Integer.parseInt(itemsObject.get("itemId"));
 		int eventId=Integer.parseInt(itemsObject.get("eventId"));
+		EventItemMapper ei=eiRepo.getEventItemByEventItem(cartId, eventId, itemId);
+		if(ei!=null)
+			return new ResponseEntity<Integer>(0,HttpStatus.BAD_REQUEST);
 		EventItemMapper eiMapper=new EventItemMapper();
 		eiMapper.setCartId(cartId);
 		eiMapper.setEventId(eventId);
@@ -96,14 +103,32 @@ public class CartController {
 	
 	@CrossOrigin
 	@PostMapping("/getitemsincart")
-	public ResponseEntity<List<Items>> getItemsInCart(@RequestBody HashMap<String,String> map, Model model){
+	public ResponseEntity<List<EventItemDetails>> getItemsInCart(@RequestBody HashMap<String,String> map, Model model){
 		List<EventItemMapper> eventItems = cartRepo.getItems(map.get("cartid"));
-		List<Items> items = new ArrayList<>();
+		List<EventItemDetails> itemdetails = new ArrayList<>();
 		for(EventItemMapper itemid : eventItems)
 		{	
-			items.add(itemRepo.findById(itemid.getItemId()).get());
+			Items item=itemRepo.findById(itemid.getItemId()).get();
+			Events event=eventRepo.findById(itemid.getEventId()).get();
+			EventItemDetails itemDetail=new EventItemDetails();
+			itemDetail.setItemDescription(item.getItemDescription());
+			itemDetail.setItemId(item.getItemId());
+			itemDetail.setItemImages(item.getItemImages());
+			itemDetail.setItemName(item.getItemName());
+			itemDetail.setItemPrice(item.getItemPrice());
+			itemDetail.setItemType(item.getItemType());
+			itemDetail.setEventId(event.getEventId());
+			itemDetail.setEventName(event.getEventName());
+			itemdetails.add(itemDetail);
 		}
-		return new ResponseEntity<List<Items>>(items, HttpStatus.OK); 
+		return new ResponseEntity<List<EventItemDetails>>(itemdetails, HttpStatus.OK); 
+	}
+	
+	@CrossOrigin
+	@PostMapping("/geteventitemmapper")
+	public ResponseEntity<List<EventItemMapper>> getEventItemMapperInCart(@RequestBody HashMap<String,String> map, Model model){
+		List<EventItemMapper> eventItems = cartRepo.getItems(map.get("cartid"));
+		return new ResponseEntity<List<EventItemMapper>>(eventItems, HttpStatus.OK); 
 	}
 	
 	private int setItemInOiMapper(String orderId,int itemId,int eventId) {
@@ -143,14 +168,25 @@ public class CartController {
 		}
 		return price;
 	}
+	
+	@CrossOrigin
+	@PostMapping("/removeItemFromCart")
+	public ResponseEntity<Integer> deleteItemFromCart(@RequestBody HashMap<String,String> map)
+	{
+		User user=userRepo.findById(Integer.parseInt(map.get("userId"))).get();
+		Cart cart = cartRepo.findById(user.getCartId()).get();
+    	EventItemMapper ei=eiRepo.getEventItemByEventItem(user.getCartId(), Integer.parseInt(map.get("eventId")),Integer.parseInt(map.get("itemId")));
+		eiRepo.deleteById(ei.getEiMapperId());
+    	return new ResponseEntity<Integer>(1,HttpStatus.OK);
+	}
 	@CrossOrigin
     @PostMapping("/checkoutcart")
     public ResponseEntity<Integer> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
-    	if(cartRepo.getDelFlag(Integer.parseInt(map.get("cartid")))==1){
+    	if(cartRepo.getDelFlag(map.get("cartid"))==1){
             throw new Exception("cart doesn't exist");
         }
     	Cart cart = cartRepo.findById(map.get("cartid")).get();
-    	cart.setDelFlag(1);
+//    	cart.setDelFlag(1);
 //    	cart.setVenueId(0);
 //    	cart.setMenuId(0);
     	cartRepo.save(cart);

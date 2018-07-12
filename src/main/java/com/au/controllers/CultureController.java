@@ -51,9 +51,9 @@ public class CultureController {
 	public ResponseEntity<Integer> setCulture(@RequestBody HashMap<String, String> paramMap) throws Exception {
 		if (paramMap != null) {
 			try {
-				if (paramMap.containsKey("userid") && paramMap.containsKey("cultureid")) {
-					String uid = paramMap.get("userid");
-					String cid = paramMap.get("cultureid");
+				if (paramMap.containsKey("userId") && paramMap.containsKey("cultureId")) {
+					String uid = paramMap.get("userId");
+					String cid = paramMap.get("cultureId");
 					if (Pattern.matches("[a-zA-Z]+", uid) == false && Pattern.matches("[a-zA-Z]+", cid) == false) {
 						int userid = Integer.parseInt(paramMap.get("userId"));
 						int cultureId = Integer.parseInt(paramMap.get("cultureId"));
@@ -74,11 +74,11 @@ public class CultureController {
 						throw new Exception();
 					}
 				}
-				else if(!paramMap.containsKey("userid")){
+				else if(!paramMap.containsKey("userId")){
 					System.out.println("empty userid");
 					throw new Exception();
 				}
-				else if(!paramMap.containsKey("cultureid")){
+				else if(!paramMap.containsKey("cultureId")){
 					System.out.println("empty cultureid");
 					throw new Exception();
 				}

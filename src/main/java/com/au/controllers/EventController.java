@@ -26,8 +26,8 @@ public class EventController {
 		if (map != null) {
 			List<Events> events = null;
 			try {
-				if (map.containsKey("cultureid")) {
-					int eid = Integer.parseInt(map.get("cultureid"));
+				if (map.containsKey("cultureId")) {
+					int eid = Integer.parseInt(map.get("cultureId"));
 					if (eid > 0) {
 						events = eventRepo.findEventByCultureId(eid);
 						if (events.size() > 0) {
