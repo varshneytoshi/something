@@ -13,10 +13,10 @@ import com.au.entities.Items;
 import com.au.entities.Orders;
 import com.au.entities.User;
 @Repository
-public interface CartRepository extends JpaRepository<Cart,Integer> {
+public interface CartRepository extends JpaRepository<Cart,String> {
 	@Query("select c.delFlag from Cart c where c.cartId = :cartid")
 	Integer getDelFlag(@Param("cartid") Integer cid);
 	
 	@Query("select ei from EventItemMapper ei where ei.cartId = :cartid and ei.delFlag = 0")
-	List<EventItemMapper> getItems(@Param("cartid") Integer cid);
+	List<EventItemMapper> getItems(@Param("cartid") String cartId);
 }

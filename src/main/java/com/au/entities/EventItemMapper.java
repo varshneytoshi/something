@@ -27,7 +27,7 @@ public class EventItemMapper {
 	private int itemId;
 	
 	@Column(name="CartId")
-	private int cartId;
+	private String cartId;
 	
 	@Column(name="DelFlag")
 	private int delFlag;
@@ -56,11 +56,11 @@ public class EventItemMapper {
 		this.itemId = itemId;
 	}
 
-	public int getCartId() {
+	public String getCartId() {
 		return cartId;
 	}
 
-	public void setCartId(int cartId) {
+	public void setCartId(String cartId) {
 		this.cartId = cartId;
 	}
 }

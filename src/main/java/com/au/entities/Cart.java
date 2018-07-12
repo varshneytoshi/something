@@ -27,7 +27,7 @@ private static final long serialVersionUID = -2054386655979281129L;
 	
 	@Id
 	@Column(name="CartId", unique=true, nullable=false)
-	private int cartId;
+	private String cartId;
 	
 	@Column(name="VenueId")
 	private int venueId;
@@ -45,12 +45,12 @@ private static final long serialVersionUID = -2054386655979281129L;
 	private int delFlag;
 
 
-	public int getCartId() {
+	public String getCartId() {
 		return cartId;
 	}
 
 
-	public void setCartId(int cartId) {
+	public void setCartId(String cartId) {
 		this.cartId = cartId;
 	}
 
