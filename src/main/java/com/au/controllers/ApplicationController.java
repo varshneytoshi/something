@@ -29,8 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.au.entities.Cart;
 import com.au.entities.User;
-
+import com.au.repositories.CartRepository;
 import com.au.repositories.UserRepository;
 
 //Controller to handle User related functions
@@ -40,6 +41,8 @@ public class ApplicationController {
 
 	@Autowired
 	UserRepository userRepo;
+	@Autowired
+	CartRepository cartRepo;
 
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
 			Pattern.CASE_INSENSITIVE);
@@ -62,23 +65,23 @@ public class ApplicationController {
 					if (!userName.isEmpty()) {
 						user.setUserName(userName);
 					} else {
-						System.out.println("Request Username parameter empty for user " + user.getUserId());
+						System.out.println("Request Username parameter empty");
 						throw new Exception();
 					}
 				} else {
-					System.out.println("Request object does not contain userName key for user  " + user.getUserId());
+					System.out.println("Request object does not contain userName key");
 					throw new Exception();
 				}
 				if (userDetails.containsKey("userPass")) {
 					String userPass = userDetails.get("userPass");
 					if (!userPass.isEmpty() && userPass.length() >= 6) {
-						user.setUserName(userPass);
+						user.setUserPass(userPass);
 					} else {
-						System.out.println("Password issue in request key userPass " + user.getUserId());
+						System.out.println("Password issue in request key userPass");
 						throw new Exception();
 					}
 				} else {
-					System.out.println("Request object does not contain userPass key for user  " + user.getUserId());
+					System.out.println("Request object does not contain userPass key ");
 					throw new Exception();
 				}
 				if (userDetails.containsKey("usermailId")) {
@@ -86,11 +89,11 @@ public class ApplicationController {
 					if (!usermailId.isEmpty() && VALID_EMAIL_ADDRESS_REGEX.matcher(usermailId).find()) {
 						user.setUsermailId(usermailId);
 					} else {
-						System.out.println("Email format not right for user " + user.getUserId());
+						System.out.println("Email format not right");
 						throw new Exception();
 					}
 				} else {
-					System.out.println("Request object does not contain useremailId key for user  " + user.getUserId());
+					System.out.println("Request object does not contain useremailId key ");
 					throw new Exception();
 				}
 				if (userDetails.containsKey("userContact")) {
@@ -98,14 +101,22 @@ public class ApplicationController {
 					if (!userContact.isEmpty() && userContact.matches("\\d{10}")) {
 						user.setUserContact(userContact);
 					} else {
-						System.out.println("Contact number format not right for user " + user.getUserId());
+						System.out.println("Contact number format not right");
 						throw new Exception();
 					}
 				} else {
-					System.out.println("Request object does not contain userContact key for user  " + user.getUserId());
+					System.out.println("Request object does not contain userContact key ");
 					throw new Exception();
 				}
-
+				Date date=new Date();
+				String cartId=Long.toString(date.getTime());
+		    	System.out.println(cartId);
+				Cart cart=new Cart();
+				cart.setCartId(cartId);
+				cart.setMenuId(-1);
+				cart.setVenueId(-1);
+				cartRepo.save(cart);
+				user.setCartId(cartId);
 				userRepo.save(user);
 				return new ResponseEntity<Integer>(1, HttpStatus.OK);
 
@@ -147,7 +158,7 @@ public class ApplicationController {
 							if(credMap.containsKey("password")) {
 								String password=credMap.get("password");
 								if(!password.isEmpty()){
-									if (user.getUserPass().equals(credMap.get("password"))) { 
+									if (user.getUserPass().equals(password)) { 
 										System.out.println("Authentication done");
 										return new ResponseEntity<Integer>(user.getUserId(), HttpStatus.OK);
 									}
@@ -202,10 +213,10 @@ public class ApplicationController {
 		if (null != map) {
 			try {
 				if (map.containsKey("cartId")) {
-					int cartId = Integer.parseInt(map.get("cartId"));
-					if (cartId > 0) {
+					String cartId = map.get("cartId");
+					if (!cartId.isEmpty()) {
 						System.out.println("Fetching user by cartId");
-						User user = userRepo.findUserByCartId(Integer.parseInt(map.get("cartid")));
+						User user = userRepo.findUserByCartId(cartId);
 						if (null != user && user.getDelFlag() == 0) {
 							System.out.println("Fetched");
 							return new ResponseEntity<User>(user, HttpStatus.OK);
@@ -240,7 +251,7 @@ public class ApplicationController {
 				if (map.containsKey("userId")) {
 					int userId = Integer.parseInt(map.get("userId"));
 					if (userId > 0) {
-						User user = userRepo.findById(Integer.parseInt(map.get("userId"))).get();
+						User user = userRepo.findById(userId).get();
 						if (null != user && user.getDelFlag() == 0) {
 							System.out.println("user fetched");
 							return new ResponseEntity<User>(user, HttpStatus.OK);

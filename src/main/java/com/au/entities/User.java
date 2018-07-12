@@ -21,7 +21,7 @@ import org.hibernate.annotations.Cascade;
 @Table(name="user")
 public class User  implements Serializable {
 public User(int userId, String userName, String userPass, String usermailId, String userContact, double estBudget,
-			int noOfGuest, Date weddingDate, int cartId, int culture, double noOfWeddingDays, int delFlag) {
+			int noOfGuest, Date weddingDate, String cartId, int culture, double noOfWeddingDays, int delFlag) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -82,7 +82,7 @@ public int getDelFlag() {
 	private Date weddingDate;
 	
 	@Column(name="CartId")
-	private int cartId;
+	private String cartId;
 	
 	@Column(name="Culture")
 	private int culture;
@@ -98,11 +98,11 @@ public int getDelFlag() {
 //	@JoinTable(name="cust_coupon" , joinColumns = { @JoinColumn(name="custId")},inverseJoinColumns= {@JoinColumn(name="couponId")})
 //	private Set<Coupon> coupons = new HashSet<Coupon>();
 
-	public int getCartId() {
+	public String getCartId() {
 		return cartId;
 	}
 
-	public void setCartId(int cartId) {
+	public void setCartId(String cartId) {
 		this.cartId = cartId;
 	}
 	public int getCulture() {

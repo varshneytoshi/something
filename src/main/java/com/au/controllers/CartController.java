@@ -60,7 +60,7 @@ public class CartController {
 	@PostMapping("/setVenue")
 	public ResponseEntity<Integer> setVenue(@RequestBody HashMap<String, String> venueObject) {
 		User user = getUser(Integer.parseInt(venueObject.get("userId")));
-		int cartid=user.getCartId();
+		String cartid=user.getCartId();
 		Cart cart=cartRepo.findById(cartid).get();
 		cart.setVenueId(Integer.parseInt(venueObject.get("venueId")));
 		cartRepo.save(cart);			
@@ -71,7 +71,7 @@ public class CartController {
 	@PostMapping("/setfoodPackage")
 	public ResponseEntity<Integer> setMenu(@RequestBody HashMap<String, String> foodObject) {
 		User user = getUser(Integer.parseInt(foodObject.get("userId")));
-		int cartid=user.getCartId();
+		String cartid=user.getCartId();
 		Cart cart=cartRepo.findById(cartid).get();
 		cart.setMenuId(Integer.parseInt(foodObject.get("packageId")));
 		cartRepo.save(cart);			
@@ -83,7 +83,7 @@ public class CartController {
 	public ResponseEntity<Integer> setitem(@RequestBody HashMap<String, String> itemsObject) {
 		int userId=Integer.parseInt(itemsObject.get("userId"));
 		User user=getUser(userId);
-		int cartId=user.getCartId();
+		String cartId=user.getCartId();
 		int itemId=Integer.parseInt(itemsObject.get("itemId"));
 		int eventId=Integer.parseInt(itemsObject.get("eventId"));
 		EventItemMapper eiMapper=new EventItemMapper();
@@ -97,7 +97,7 @@ public class CartController {
 	@CrossOrigin
 	@PostMapping("/getitemsincart")
 	public ResponseEntity<List<Items>> getItemsInCart(@RequestBody HashMap<String,String> map, Model model){
-		List<EventItemMapper> eventItems = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
+		List<EventItemMapper> eventItems = cartRepo.getItems(map.get("cartid"));
 		List<Items> items = new ArrayList<>();
 		for(EventItemMapper itemid : eventItems)
 		{	
@@ -127,7 +127,7 @@ public class CartController {
     	else
     		throw new Exception("cart doesnt exist");
     }
-	private double getCartCost(int cartId)
+	private double getCartCost(String cartId)
 	{
 		double price=0.0;
 		Cart cart = cartRepo.findById(cartId).get();
@@ -149,7 +149,7 @@ public class CartController {
     	if(cartRepo.getDelFlag(Integer.parseInt(map.get("cartid")))==1){
             throw new Exception("cart doesn't exist");
         }
-    	Cart cart = cartRepo.findById(Integer.parseInt(map.get("cartid"))).get();
+    	Cart cart = cartRepo.findById(map.get("cartid")).get();
     	cart.setDelFlag(1);
 //    	cart.setVenueId(0);
 //    	cart.setMenuId(0);
@@ -163,14 +163,14 @@ public class CartController {
     	order.setMenuId(cart.getMenuId());
     	order.setVenueId(cart.getVenueId());
     	order.setTotalPrice(User.totalPrice);//to be calculated
-    	User user = userRepo.findUserByCartId(Integer.parseInt(map.get("cartid")));
+    	User user = userRepo.findUserByCartId(map.get("cartid"));
     	order.setUserId(user.getUserId());
     	order.setDelFlag(0);
     	order.setTotalPrice(getCartCost(cart.getCartId()));
 //    	order.setItemsPurchased(items);
     	orderRepo.save(order);
     	//todo: add delete items from cart);
-    	List<EventItemMapper> items = cartRepo.getItems(Integer.parseInt(map.get("cartid")));
+    	List<EventItemMapper> items = cartRepo.getItems(map.get("cartid"));
     	for(EventItemMapper item : items) {
     		setItemInOiMapper(orderId, item.getItemId(),item.getEventId() );
     		eiRepo.deleteById(item.getEiMapperId());
