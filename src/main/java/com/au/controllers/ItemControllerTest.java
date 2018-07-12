@@ -16,10 +16,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.au.entities.Events;
+import com.au.entities.Items;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-public class EventControllerTest {
+public class ItemControllerTest {
 	@Autowired
 	EventController eventController;
 	@Autowired
@@ -31,12 +32,20 @@ public class EventControllerTest {
 	}
 
 	@Test
-	public void checkGetEvents() {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("cultureid", 1);
-		ResponseEntity<Events[]> responseEntity = restTemplate.postForEntity("/getevents", map, Events[].class);
-		Events[] events = responseEntity.getBody();
-		System.out.println(events);
+	public void checkGetItemsByType() {
+		Map<String,String> map = new HashMap<>();
+		map.put("itemtype", "decor");
+		ResponseEntity<Items[]> responseEntity = restTemplate.postForEntity("/getItems", map, Items[].class);
+		String items = responseEntity.getBody().toString();
+		System.out.println(items);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void checkGetAllItems() {
+		ResponseEntity<Items[]> responseEntity = restTemplate.getForEntity("/getAllItems", Items[].class);
+		Items[] items = responseEntity.getBody();
+		System.out.println(items);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 }

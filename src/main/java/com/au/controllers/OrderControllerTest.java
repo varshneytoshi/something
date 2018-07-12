@@ -16,12 +16,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.au.entities.Events;
+import com.au.entities.Orders;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
-public class EventControllerTest {
+public class OrderControllerTest {
 	@Autowired
-	EventController eventController;
+	OrderController orderController;
 	@Autowired
 	private TestRestTemplate restTemplate;
 
@@ -31,12 +32,22 @@ public class EventControllerTest {
 	}
 
 	@Test
-	public void checkGetEvents() {
+	public void checkGetOrders() {
 		Map<String,Integer> map = new HashMap<>();
-		map.put("cultureid", 1);
-		ResponseEntity<Events[]> responseEntity = restTemplate.postForEntity("/getevents", map, Events[].class);
-		Events[] events = responseEntity.getBody();
-		System.out.println(events);
+		map.put("userid", 1);
+		ResponseEntity<Orders[]> responseEntity = restTemplate.postForEntity("/getOrders", map, Orders[].class);
+		Orders[] orders = responseEntity.getBody();
+		System.out.println(orders);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+	
+	@Test
+	public void checkDeleteOrder() {
+		Map<String,Integer> map = new HashMap<>();
+		map.put("orderid", 1);
+		ResponseEntity<Integer> responseEntity = restTemplate.postForEntity("/deleteorder", map, Integer.class);
+		int result = responseEntity.getBody();
+		System.out.println(result);
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 }
