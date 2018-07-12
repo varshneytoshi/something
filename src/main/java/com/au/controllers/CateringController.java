@@ -39,7 +39,7 @@ public class CateringController {
 				System.out.println("Fetched catering items from database");
 				return new ResponseEntity<List<Catering>>(catering, HttpStatus.OK);
 			} else {
-				System.out.println("No items found for catering");
+				System.out.println("Query returned null");
 				return new ResponseEntity<List<Catering>>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} catch (Exception e) {
@@ -91,15 +91,42 @@ public class CateringController {
 		return estBudget * 0.4 / (noOfDays * guests);
 	}
 
-			@CrossOrigin
-			@PostMapping("/getCateringDetails")
-			public ResponseEntity<Catering> getCateringById(@RequestBody HashMap<String,String> menuMap)
-			{
-				Catering cat=cateringRepo.findById(Integer.parseInt(menuMap.get("menuId"))).get();
-				return new ResponseEntity<Catering>(cat,HttpStatus.OK);
+	@CrossOrigin
+	@PostMapping("/getCateringDetails")
+	public ResponseEntity<Catering> getCateringById(@RequestBody HashMap<String, String> menuMap) {
+		if (menuMap != null) {
+			try {
+				if (menuMap.containsKey("menuId")) {
+					int mid = Integer.parseInt(menuMap.get("menuId"));
+					if (mid > 0) {
+						Catering cat = cateringRepo.findById(mid).get();
+						if (cat!=null) {
+							System.out.println("Fetched catering object from database");
+							return new ResponseEntity<Catering>(cat, HttpStatus.OK);
+						}
+						else {
+							System.out.println("Query returned null");
+							return new ResponseEntity<Catering>(HttpStatus.INTERNAL_SERVER_ERROR);
+						}
+					}
+					else {
+						System.out.println("invalid menu id");
+						throw new Exception();
+					}
+				} else {
+					System.out.println("Empty menu id");
+					throw new Exception();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<Catering>(HttpStatus.BAD_REQUEST);
 			}
-		
-			
+		} else {
+			System.out.println("Request object is null");
+			return new ResponseEntity<Catering>(HttpStatus.BAD_REQUEST);
+		}
+	}
+
 	@CrossOrigin
 	@PostMapping("/addCatering")
 	public ResponseEntity<Integer> addCatering(@RequestBody HashMap<String, String> credMap) throws Exception {
@@ -107,26 +134,26 @@ public class CateringController {
 			try {
 				if (credMap.containsKey("userId")) {
 					int uid = Integer.parseInt(credMap.get("userId"));
-					if(uid>0) {
-					User user = userRepo.findById(uid).get();
-					if (user != null) {
-						System.out.println("Fetched user object from database");
-						Cart cart = cartRepo.findById(user.getCartId()).get();
-						if (cart != null) {
-							System.out.println("Fetched cart object from database");
-							cart.setMenuId(Integer.parseInt(credMap.get("menuId")));
-							cartRepo.save(cart);
-							System.out.println("Saved user object to database");
-							return new ResponseEntity<Integer>(1, HttpStatus.OK);
+					if (uid > 0) {
+						User user = userRepo.findById(uid).get();
+						if (user != null) {
+							System.out.println("Fetched user object from database");
+							Cart cart = cartRepo.findById(user.getCartId()).get();
+							if (cart != null) {
+								System.out.println("Fetched cart object from database");
+								cart.setMenuId(Integer.parseInt(credMap.get("menuId")));
+								cartRepo.save(cart);
+								System.out.println("Saved user object to database");
+								return new ResponseEntity<Integer>(1, HttpStatus.OK);
+							} else {
+								System.out.println("Query returned null");
+								return new ResponseEntity<Integer>(-2, HttpStatus.INTERNAL_SERVER_ERROR);
+							}
 						} else {
 							System.out.println("Query returned null");
 							return new ResponseEntity<Integer>(-2, HttpStatus.INTERNAL_SERVER_ERROR);
 						}
 					} else {
-						System.out.println("Query returned null");
-						return new ResponseEntity<Integer>(-2, HttpStatus.INTERNAL_SERVER_ERROR);
-					}}
-					else {
 						System.out.println("invalid user id");
 						throw new Exception();
 					}
