@@ -40,7 +40,6 @@ public class ApplicationController {
 		return "addNewUser";
 	}
 	@CrossOrigin
-	@CrossOrigin
 	@PostMapping("/addNewUser")
 	public ResponseEntity<Integer> saveUser(@RequestBody HashMap<String, String> userDetails) {
 
@@ -97,7 +96,8 @@ public class ApplicationController {
 					throw new Exception();
 				}
 				Date date=new Date();
-				String cartId=Long.toString(date.getTime());
+				String cartId=(Long.toString(date.getTime())).substring(7);
+				System.out.println(cartId);
 		    	System.out.println(cartId);
 				Cart cart=new Cart();
 				cart.setCartId(cartId);
