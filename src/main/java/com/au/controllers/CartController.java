@@ -181,7 +181,7 @@ public class CartController {
 	}
 	@CrossOrigin
     @PostMapping("/checkoutcart")
-    public ResponseEntity<Integer> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
+    public ResponseEntity<String> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{
     	if(cartRepo.getDelFlag(map.get("cartid"))==1){
             throw new Exception("cart doesn't exist");
         }
@@ -211,7 +211,7 @@ public class CartController {
     		setItemInOiMapper(orderId, item.getItemId(),item.getEventId() );
     		eiRepo.deleteById(item.getEiMapperId());
     	}
-    	return new ResponseEntity<Integer>(1, HttpStatus.OK);
+    	return new ResponseEntity<String>(orderId, HttpStatus.OK);
     }
 	
 }

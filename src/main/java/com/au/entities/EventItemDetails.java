@@ -1,6 +1,5 @@
 package com.au.entities;
 
-import javax.persistence.Column;
 
 public class EventItemDetails {
 

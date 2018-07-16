@@ -37,7 +37,7 @@ public class VenueController {
 					if (uid > 0) {
 						User user = userRepo.findById(uid).get();
 						if (user != null) {
-							System.out.println("Fetched user object from database");
+							System.out.println("Fetched user from database");
 							System.out.println(user.getUserName());
 							double priceBound = calculateVenuePriceUpperBound(user.getEstBudget(),
 									user.getNoOfWeddingDays());
@@ -50,7 +50,7 @@ public class VenueController {
 									System.out.println("Returning list of venues");
 									return new ResponseEntity<List<Venue>>(venues, HttpStatus.OK);
 								} else {
-									System.out.println("No venues have been added by this user");
+									System.out.println("No venues for the selected filters");
 									throw new Exception();
 								}
 
