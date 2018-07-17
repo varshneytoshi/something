@@ -93,10 +93,11 @@ public class OrderController {
 							orderDetailPojo.setOrderId(orders.getOrderId());
 							orderDetailPojo.setUserId(orders.getUserId());
 							orderDetailPojo.setUserName(user.getUserName());
+							orderDetailPojo.setMailId(user.getUsermailId());
 							orderDetailPojo.setVenue(venue);
 							orderDetailPojo.setMenu(catering);
 							orderDetailPojo.setItems(itemdetails);
-							
+							orderDetailPojo.setCateringPrice(catering.getPricePerPlate()*user.getNoOfGuest()*user.getNoOfWeddingDays());
 							
 							totalPrice+=venue.getVenuePrice()+user.getNoOfGuest()*catering.getPricePerPlate()*user.getNoOfWeddingDays();
 							orderDetailPojo.setTotalPrice(totalPrice);
