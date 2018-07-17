@@ -36,31 +36,28 @@ public class Venue implements Serializable {
 	@Column(name = "VenueCapacity")
 	private int venueCapacity;
 	
-	@Column(name = "DateOfBooking")
-	private Date dateOfBooking;
+//	@Column(name = "DateOfBooking")
+//	private Date dateOfBooking;
 
-	@Column(name = "NoOfDays")
-	private int noOfDays;
+//	@Column(name = "NoOfDays")
+//	private int noOfDays;
 
-	public Date getDateOfBooking() {
-		return dateOfBooking;
-	}
+//	public Date getDateOfBooking() {
+//		return dateOfBooking;
+//	}
+//
+//	public void setDateOfBooking(Date dateOfBooking) {
+//		this.dateOfBooking = dateOfBooking;
+//	}
 
-	public void setDateOfBooking(Date dateOfBooking) {
-		this.dateOfBooking = dateOfBooking;
-	}
+//	public int getNoOfDays() {
+//		return noOfDays;
+//	}
+//
+//	public void setNoOfDays(int noOfDays) {
+//		this.noOfDays = noOfDays;
+//	}
 
-	public int getNoOfDays() {
-		return noOfDays;
-	}
-
-	public void setNoOfDays(int noOfDays) {
-		this.noOfDays = noOfDays;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	public int getDelFlag() {
 		return delFlag;
