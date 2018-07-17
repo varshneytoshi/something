@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.au.entities.Cart;
 import com.au.entities.User;
 import com.au.entities.Venue;
+import com.au.repositories.CartRepository;
 import com.au.repositories.UserRepository;
 import com.au.repositories.VenueRepository;
 
@@ -26,6 +28,9 @@ public class VenueController {
 	VenueRepository venueRepo;
 	@Autowired
 	UserRepository userRepo;
+	
+	@Autowired
+	CartRepository cartRepo;
 
 	@CrossOrigin
 	@PostMapping("/getVenues")
@@ -81,40 +86,57 @@ public class VenueController {
 		}
 	}
 
+//	@CrossOrigin
+//	@PostMapping("/getVenueDetails")
+//	public ResponseEntity<Venue> getVenueById(@RequestBody HashMap<String, String> venueMap) {
+//		if (venueMap != null) {
+//			try {
+//				if (venueMap.containsKey("venueId")) {
+//					int vid = Integer.parseInt(venueMap.get("venueId"));
+//					if (vid > 0) {
+//						Venue venue = venueRepo.findById(vid).get();
+//						if (venue != null) {
+//							System.out.println("Fetched venue object from database");
+//							return new ResponseEntity<Venue>(venue, HttpStatus.OK);
+//						} else {
+//							System.out.println("query returned null");
+//							return new ResponseEntity<Venue>(HttpStatus.INTERNAL_SERVER_ERROR);
+//						}
+//					} else {
+//						System.out.println("invalid venue id");
+//						throw new Exception();
+//					}
+//				} else {
+//					System.out.println("empty venue id");
+//					throw new Exception();
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				return new ResponseEntity<Venue>(HttpStatus.BAD_REQUEST);
+//			}
+//		} else {
+//			System.out.println("Request object is null");
+//			return new ResponseEntity<Venue>(HttpStatus.BAD_REQUEST);
+//		}
+//	}
+
 	@CrossOrigin
 	@PostMapping("/getVenueDetails")
 	public ResponseEntity<Venue> getVenueById(@RequestBody HashMap<String, String> venueMap) {
-		if (venueMap != null) {
-			try {
-				if (venueMap.containsKey("venueId")) {
-					int vid = Integer.parseInt(venueMap.get("venueId"));
-					if (vid > 0) {
-						Venue venue = venueRepo.findById(vid).get();
-						if (venue != null) {
-							System.out.println("Fetched venue object from database");
-							return new ResponseEntity<Venue>(venue, HttpStatus.OK);
-						} else {
-							System.out.println("query returned null");
-							return new ResponseEntity<Venue>(HttpStatus.INTERNAL_SERVER_ERROR);
-						}
-					} else {
-						System.out.println("invalid venue id");
-						throw new Exception();
-					}
-				} else {
-					System.out.println("empty venue id");
-					throw new Exception();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				return new ResponseEntity<Venue>(HttpStatus.BAD_REQUEST);
-			}
-		} else {
-			System.out.println("Request object is null");
-			return new ResponseEntity<Venue>(HttpStatus.BAD_REQUEST);
+		
+		Cart cart = cartRepo.findById(venueMap.get("cartId")).get();
+		Venue venue = venueRepo.findById(cart.getVenueId()).get();
+		if(cart.getVenueId()==-1) {
+			System.out.println("No venue has been added by this user");
+			venue.setVenueId(400);
+			return new ResponseEntity<Venue>(venue,HttpStatus.BAD_REQUEST);
+		}
+		else {
+			
+			return new ResponseEntity<Venue>(venue,HttpStatus.OK);
 		}
 	}
-
+	
 	private double calculateVenuePriceUpperBound(double estBudget, double noOfDays) {
 		System.out.println("Estimating budget for venue");
 		return estBudget * 0.4 / noOfDays;

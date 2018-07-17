@@ -104,7 +104,8 @@ public class CartController {
 	@CrossOrigin
 	@PostMapping("/getitemsincart")
 	public ResponseEntity<List<EventItemDetails>> getItemsInCart(@RequestBody HashMap<String,String> map, Model model){
-		List<EventItemMapper> eventItems = cartRepo.getItems(map.get("cartid"));
+
+		List<EventItemMapper> eventItems = cartRepo.getItems(map.get("cartId"));
 		List<EventItemDetails> itemdetails = new ArrayList<>();
 		for(EventItemMapper itemid : eventItems)
 		{	
@@ -172,13 +173,37 @@ public class CartController {
 	@CrossOrigin
 	@PostMapping("/removeItemFromCart")
 	public ResponseEntity<Integer> deleteItemFromCart(@RequestBody HashMap<String,String> map)
-	{
+	{ System.out.println("InRemove");
 		User user=userRepo.findById(Integer.parseInt(map.get("userId"))).get();
-		Cart cart = cartRepo.findById(user.getCartId()).get();
     	EventItemMapper ei=eiRepo.getEventItemByEventItem(user.getCartId(), Integer.parseInt(map.get("eventId")),Integer.parseInt(map.get("itemId")));
 		eiRepo.deleteById(ei.getEiMapperId());
     	return new ResponseEntity<Integer>(1,HttpStatus.OK);
 	}
+	
+	@CrossOrigin
+	@PostMapping("/removeVenueFromCart")
+	public ResponseEntity<Integer> deleteVenueFromCart(@RequestBody HashMap<String,String> map)
+	{
+		System.out.println("In remove venue");
+		User user=userRepo.findById(Integer.parseInt(map.get("userId"))).get();
+		Cart cart = cartRepo.findById(user.getCartId()).get();
+		cart.setVenueId(-1);
+		cartRepo.save(cart);
+		return new ResponseEntity<Integer>(1,HttpStatus.OK);
+	}
+	
+	@CrossOrigin
+	@PostMapping("/removeCateringFromCart")
+	public ResponseEntity<Integer> deleteCateringFromCart(@RequestBody HashMap<String,String> map)
+	{
+		System.out.println("In remove catering");
+		User user=userRepo.findById(Integer.parseInt(map.get("userId"))).get();
+		Cart cart = cartRepo.findById(user.getCartId()).get();
+		cart.setMenuId(-1);
+		cartRepo.save(cart);
+		return new ResponseEntity<Integer>(1,HttpStatus.OK);
+	}
+	
 	@CrossOrigin
     @PostMapping("/checkoutcart")
     public ResponseEntity<String> deleteCart(@RequestBody HashMap<String,String> map, Model model) throws Exception{

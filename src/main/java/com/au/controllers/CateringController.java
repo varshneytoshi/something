@@ -91,42 +91,59 @@ public class CateringController {
 		return estBudget * 0.4 / (noOfDays * guests);
 	}
 
+//	@CrossOrigin
+//	@PostMapping("/getCateringDetails")
+//	public ResponseEntity<Catering> getCateringById(@RequestBody HashMap<String, String> menuMap) {
+//		if (menuMap != null) {
+//			try {
+//				if (menuMap.containsKey("menuId")) {
+//					int mid = Integer.parseInt(menuMap.get("menuId"));
+//					if (mid > 0) {
+//						Catering cat = cateringRepo.findById(mid).get();
+//						if (cat!=null) {
+//							System.out.println("Fetched catering object from database");
+//							return new ResponseEntity<Catering>(cat, HttpStatus.OK);
+//						}
+//						else {
+//							System.out.println("Query returned null");
+//							return new ResponseEntity<Catering>(HttpStatus.INTERNAL_SERVER_ERROR);
+//						}
+//					}
+//					else {
+//						System.out.println("invalid menu id");
+//						throw new Exception();
+//					}
+//				} else {
+//					System.out.println("Empty menu id");
+//					throw new Exception();
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				return new ResponseEntity<Catering>(HttpStatus.BAD_REQUEST);
+//			}
+//		} else {
+//			System.out.println("Request object is null");
+//			return new ResponseEntity<Catering>(HttpStatus.BAD_REQUEST);
+//		}
+//	}
+
 	@CrossOrigin
 	@PostMapping("/getCateringDetails")
-	public ResponseEntity<Catering> getCateringById(@RequestBody HashMap<String, String> menuMap) {
-		if (menuMap != null) {
-			try {
-				if (menuMap.containsKey("menuId")) {
-					int mid = Integer.parseInt(menuMap.get("menuId"));
-					if (mid > 0) {
-						Catering cat = cateringRepo.findById(mid).get();
-						if (cat!=null) {
-							System.out.println("Fetched catering object from database");
-							return new ResponseEntity<Catering>(cat, HttpStatus.OK);
-						}
-						else {
-							System.out.println("Query returned null");
-							return new ResponseEntity<Catering>(HttpStatus.INTERNAL_SERVER_ERROR);
-						}
-					}
-					else {
-						System.out.println("invalid menu id");
-						throw new Exception();
-					}
-				} else {
-					System.out.println("Empty menu id");
-					throw new Exception();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				return new ResponseEntity<Catering>(HttpStatus.BAD_REQUEST);
-			}
-		} else {
-			System.out.println("Request object is null");
-			return new ResponseEntity<Catering>(HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Catering> getVenueById(@RequestBody HashMap<String, String> map) {
+		
+		Cart cart = cartRepo.findById(map.get("cartId")).get();
+		Catering c = cateringRepo.findById(cart.getVenueId()).get();
+		if(cart.getMenuId()==-1) {
+			System.out.println("No menu has been added by this user");
+			c.setMenuId(400);
+			return new ResponseEntity<Catering>(c,HttpStatus.BAD_REQUEST);
+		}
+		else {
+			
+			return new ResponseEntity<Catering>(c,HttpStatus.OK);
 		}
 	}
-
+	
 	@CrossOrigin
 	@PostMapping("/addCatering")
 	public ResponseEntity<Integer> addCatering(@RequestBody HashMap<String, String> credMap) throws Exception {
