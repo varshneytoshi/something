@@ -38,11 +38,11 @@ public class VenueController {
 					if (uid > 0) {
 						User user = userRepo.findById(uid).get();
 						if (user != null) {
-							System.out.println("Fetched user object from database");
+							System.out.println("Fetched user from database");
 							System.out.println(user.getUserName());
 							double priceBound = calculateVenuePriceUpperBound(user.getEstBudget(),
 									user.getNoOfWeddingDays());
-							String location = filters.get("location");
+							String location = filters.get("venueLocation");
 							int noOfGuests = user.getNoOfGuest();
 							if (location != null && noOfGuests > 0) {
 								System.out.println("Got user input for location and no of guests");
@@ -51,7 +51,7 @@ public class VenueController {
 									System.out.println("Returning list of venues");
 									return new ResponseEntity<List<Venue>>(venues, HttpStatus.OK);
 								} else {
-									System.out.println("No venues have been added by this user");
+									System.out.println("No venues for the selected filters");
 									throw new Exception();
 								}
 

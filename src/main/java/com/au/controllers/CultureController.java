@@ -54,13 +54,10 @@ public class CultureController {
 	public ResponseEntity<Integer> setCulture(@RequestBody HashMap<String, String> paramMap) throws Exception {
 		if (paramMap != null) {
 			try {
-				if (paramMap.containsKey("userId") && paramMap.containsKey("cultureId")) {
-					String uid = paramMap.get("userId");
-					String cid = paramMap.get("cultureId");
-					System.out.println("Got user input for userid and cultureid");
-					if (Pattern.matches("[a-zA-Z]+", uid) == false && Pattern.matches("[a-zA-Z]+", cid) == false) {
+					
 						int userid = Integer.parseInt(paramMap.get("userId"));
 						int cultureId = Integer.parseInt(paramMap.get("cultureId"));
+						System.out.println("Got user input for userid and cultureid");
 						User user = userrepo.findById(userid).get();
 						if (user != null) {
 							user.setCulture(cultureId);
@@ -70,22 +67,7 @@ public class CultureController {
 							System.out.println("Query returned null");
 							return new ResponseEntity<Integer>(-2, HttpStatus.INTERNAL_SERVER_ERROR);
 						}
-					} else if (Pattern.matches("[a-zA-Z]+", uid) == false) {
-						System.out.println("Invalid input for user id");
-						throw new Exception();
-					} else if (Pattern.matches("[a-zA-Z]+", cid) == false) {
-						System.out.println("Invalid input for cuture id");
-						throw new Exception();
-					}
-				}
-				else if(!paramMap.containsKey("userid")){
-					System.out.println("empty userid");
-					throw new Exception();
-				}
-				else if(!paramMap.containsKey("cultureid")){
-					System.out.println("empty cultureid");
-					throw new Exception();
-				}
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				return new ResponseEntity<Integer>(-1, HttpStatus.BAD_REQUEST);
@@ -94,7 +76,6 @@ public class CultureController {
 			System.out.println("Request object is null");
 			return new ResponseEntity<Integer>(0, HttpStatus.BAD_REQUEST);
 		}
-		return null;
 	}
 	
 	@CrossOrigin

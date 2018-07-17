@@ -2,10 +2,6 @@ package com.au.controllers;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +21,16 @@ public class EventControllerTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
+	@org.junit.Before
+	public void start() {
+		System.out.println("Before test cases");
+	}
+
 	@Test
 	public void checkGetEvents() {
-		Map<String,Integer> map = new HashMap<>();
-		map.put("cultureid", 1);
-		ResponseEntity<Events[]> responseEntity = restTemplate.postForEntity("/getevents", map, Events[].class);
-		Events[] events = responseEntity.getBody();
-		System.out.println(events);
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+		ResponseEntity<Events> responseEntity = restTemplate.postForEntity("/getevents", new Integer(1), Events.class);
+		Events events = responseEntity.getBody();
+		assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+		assertEquals(0, events.getEventId());
 	}
 }

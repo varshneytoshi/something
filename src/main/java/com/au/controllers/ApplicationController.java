@@ -96,7 +96,8 @@ public class ApplicationController {
 					throw new Exception();
 				}
 				Date date=new Date();
-				String cartId=Long.toString(date.getTime());
+				String cartId=(Long.toString(date.getTime())).substring(7);
+				System.out.println(cartId);
 		    	System.out.println(cartId);
 				Cart cart=new Cart();
 				cart.setCartId(cartId);
@@ -339,8 +340,8 @@ public class ApplicationController {
 								throw new Exception();
 							}
 
-							if (filterMap.containsKey("estimatedBudget")) {
-								estBudget = Double.parseDouble(filterMap.get("estimatedBudget"));
+							if (filterMap.containsKey("estBudget")) {
+								estBudget = Double.parseDouble(filterMap.get("estBudget"));
 								if (estBudget > 0) {
 									user.setEstBudget(estBudget);
 								} else {
