@@ -2,6 +2,7 @@ package com.au.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,13 +30,13 @@ private String cultureName;
 private int culture_Creation_Id;
 
 @Column(name="Culture_Creation_Date")
-private Date culture_Creation_Date;
+private LocalDate culture_Creation_Date;
 
 @Column(name="Culture_Modification_Id")
 private int Culture_Modification_Id;
 
 @Column(name="Culture_Modification_Date")
-private Date culture_Modification_Date;
+private LocalDate culture_Modification_Date;
 
 @Column(name="DelFlag")
 private int delFlag;
@@ -64,11 +65,11 @@ public void setCulture_Creation_Id(int culture_Creation_Id) {
 	this.culture_Creation_Id = culture_Creation_Id;
 }
 
-public Date getCulture_Creation_Date() {
+public LocalDate getCulture_Creation_Date() {
 	return culture_Creation_Date;
 }
 
-public void setCulture_Creation_Date(Date culture_Creation_Date) {
+public void setCulture_Creation_Date(LocalDate culture_Creation_Date) {
 	this.culture_Creation_Date = culture_Creation_Date;
 }
 
@@ -80,11 +81,11 @@ public void setCulture_Modification_Id(int culture_Modification_Id) {
 	Culture_Modification_Id = culture_Modification_Id;
 }
 
-public Date getCulture_Modification_Date() {
+public LocalDate getCulture_Modification_Date() {
 	return culture_Modification_Date;
 }
 
-public void setCulture_Modification_Date(Date culture_Modification_Date) {
+public void setCulture_Modification_Date(LocalDate culture_Modification_Date) {
 	this.culture_Modification_Date = culture_Modification_Date;
 }
 

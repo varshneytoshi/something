@@ -34,7 +34,7 @@ public class ApplicationControllerTest {
 	}
 
 	@Test
-	public void checkGetOrders() {
+	public void checkGetUsers() {
 		Map<String,String> map = new HashMap<>();
 		map.put("userName", "gayu");
 		map.put("userPass", "123123");

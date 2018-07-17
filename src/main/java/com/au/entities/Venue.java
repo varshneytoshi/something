@@ -1,6 +1,7 @@
 package com.au.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,89 +11,118 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Venue")
+@Table(name = "Venue")
 public class Venue implements Serializable {
 
-private static final long serialVersionUID = -2054386655979281129L;
+	private static final long serialVersionUID = -2054386655979281129L;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name="VenueId")
-private int venueId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "VenueId")
+	private int venueId;
 
-@Column(name="VenueName")//,unique=true)
-private String venueName;
+	@Column(name = "VenueName") // ,unique=true)
+	private String venueName;
 
-@Column(name="VenueType")
-private String venueType;
+	@Column(name = "VenueType")
+	private String venueType;
 
-@Column(name="VenueLocation")
-private String venueLocation;
+	@Column(name = "VenueLocation")
+	private String venueLocation;
 
-@Column(name="VenuePrice")
-private Double venuePrice;
+	@Column(name = "VenuePrice")
+	private Double venuePrice;
 
-@Column(name="VenueCapacity")
-private int venueCapacity;
+	@Column(name = "VenueCapacity")
+	private int venueCapacity;
+	
+	@Column(name = "DateOfBooking")
+	private Date dateOfBooking;
 
-@Column(name="DelFlag")
-private int delFlag;
+	@Column(name = "NoOfDays")
+	private int noOfDays;
 
-public int getVenueId() {
-	return venueId;
-}
+	public Date getDateOfBooking() {
+		return dateOfBooking;
+	}
 
-public void setVenueId(int venueId) {
-	this.venueId = venueId;
-}
+	public void setDateOfBooking(Date dateOfBooking) {
+		this.dateOfBooking = dateOfBooking;
+	}
 
-public String getVenueName() {
-	return venueName;
-}
+	public int getNoOfDays() {
+		return noOfDays;
+	}
 
-public void setVenueName(String venueName) {
-	this.venueName = venueName;
-}
+	public void setNoOfDays(int noOfDays) {
+		this.noOfDays = noOfDays;
+	}
 
-public String getVenueType() {
-	return venueType;
-}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-public void setVenueType(String venueType) {
-	this.venueType = venueType;
-}
+	public int getDelFlag() {
+		return delFlag;
+	}
 
-public String getVenueLocation() {
-	return venueLocation;
-}
+	@Column(name = "DelFlag")
+	private int delFlag;
 
-public void setVenueLocation(String venueLocation) {
-	this.venueLocation = venueLocation;
-}
+	public int getVenueId() {
+		return venueId;
+	}
 
-public Double getVenuePrice() {
-	return venuePrice;
-}
+	public void setVenueId(int venueId) {
+		this.venueId = venueId;
+	}
 
-public void setVenuePrice(Double venuePrice) {
-	this.venuePrice = venuePrice;
-}
+	public String getVenueName() {
+		return venueName;
+	}
 
-public int getVenueCapacity() {
-	return venueCapacity;
-}
+	public void setVenueName(String venueName) {
+		this.venueName = venueName;
+	}
 
-public void setVenueCapacity(int venueCapacity) {
-	this.venueCapacity = venueCapacity;
-}
+	public String getVenueType() {
+		return venueType;
+	}
 
-public int isDelFlag() {
-	return delFlag;
-}
+	public void setVenueType(String venueType) {
+		this.venueType = venueType;
+	}
 
-public void setDelFlag(int delFlag) {
-	this.delFlag = delFlag;
-}
+	public String getVenueLocation() {
+		return venueLocation;
+	}
 
+	public void setVenueLocation(String venueLocation) {
+		this.venueLocation = venueLocation;
+	}
+
+	public Double getVenuePrice() {
+		return venuePrice;
+	}
+
+	public void setVenuePrice(Double venuePrice) {
+		this.venuePrice = venuePrice;
+	}
+
+	public int getVenueCapacity() {
+		return venueCapacity;
+	}
+
+	public void setVenueCapacity(int venueCapacity) {
+		this.venueCapacity = venueCapacity;
+	}
+
+	public int isDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(int delFlag) {
+		this.delFlag = delFlag;
+	}
 
 }
