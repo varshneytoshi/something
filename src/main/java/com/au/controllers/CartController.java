@@ -216,7 +216,7 @@ public class CartController {
 //    	cart.setMenuId(0);
     	cartRepo.save(cart);
     	Date date=new Date();
-    	String orderId=date.getTime()+"//"+cart.getCartId();
+    	String orderId=date.getTime()+cart.getCartId().toString();
     	orderId=orderId.substring(7);
     	System.out.println(orderId);
     	Orders order = new Orders();
@@ -236,6 +236,7 @@ public class CartController {
     		setItemInOiMapper(orderId, item.getItemId(),item.getEventId() );
     		eiRepo.deleteById(item.getEiMapperId());
     	}
+    	System.out.println(orderId+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     	return new ResponseEntity<String>(orderId, HttpStatus.OK);
     }
 	
