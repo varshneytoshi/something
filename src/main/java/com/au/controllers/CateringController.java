@@ -132,10 +132,9 @@ public class CateringController {
 	public ResponseEntity<Catering> getVenueById(@RequestBody HashMap<String, String> map) {
 		
 		Cart cart = cartRepo.findById(map.get("cartId")).get();
-		Catering c = cateringRepo.findById(cart.getVenueId()).get();
+		Catering c = cateringRepo.findById(cart.getMenuId()).get();
 		if(cart.getMenuId()==-1) {
 			System.out.println("No menu has been added by this user");
-			c.setMenuId(400);
 			return new ResponseEntity<Catering>(c,HttpStatus.BAD_REQUEST);
 		}
 		else {

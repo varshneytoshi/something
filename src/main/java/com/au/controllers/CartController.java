@@ -211,14 +211,14 @@ public class CartController {
             throw new Exception("cart doesn't exist");
         }
     	Cart cart = cartRepo.findById(map.get("cartid")).get();
-//    	cart.setDelFlag(1);
+ //  	cart.setDelFlag(1);
 //    	cart.setVenueId(0);
 //    	cart.setMenuId(0);
     	cartRepo.save(cart);
     	Date date=new Date();
     	String orderId=date.getTime()+cart.getCartId().toString();
     	orderId=orderId.substring(7);
-    	System.out.println(orderId);
+    	System.out.println("Order+"+orderId);
     	Orders order = new Orders();
     	order.setOrderId(orderId);
     	order.setMenuId(cart.getMenuId());

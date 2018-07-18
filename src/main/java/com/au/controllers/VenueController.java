@@ -128,7 +128,6 @@ public class VenueController {
 		Venue venue = venueRepo.findById(cart.getVenueId()).get();
 		if(cart.getVenueId()==-1) {
 			System.out.println("No venue has been added by this user");
-			venue.setVenueId(400);
 			return new ResponseEntity<Venue>(venue,HttpStatus.BAD_REQUEST);
 		}
 		else {
